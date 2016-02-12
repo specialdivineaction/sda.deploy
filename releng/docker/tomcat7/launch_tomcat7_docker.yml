@@ -1,0 +1,32 @@
+---
+# Launch Tomcat 7
+- hosts: localhost
+    
+  tasks:
+  - name: set path for tomcat install
+    set_fact: tomcat_path=/usr/local/tomcat
+  - name: override values for tomcat variables
+    set_fact: "{{ item.var }}={{ item.val }}"
+    with_items:
+      - { var: "tomcat_xmx", val: "{{ ansible_env.tomcat_xmx | default('128m') }}" }
+      - { var: "tomcat_xms", val: "{{ ansible_env.tomcat_xms | default('64m') }}" }
+      - { var: "tomcat_maxpermsize", val: "{{ ansible_env.tomcat_maxpermsize | default('64m') }}" }
+      - { var: "tomcat_log_dir", val: "{{ ansible_env.tomcat_log_dir | default('/usr/local/tomcat/logs') }}" }
+      - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
+#  - name: set permissions on files
+#    file: path={{ item }} owner=tomcat7 group=tomcat7 state=directory recurse=yes
+#    with_items:
+#    - "{{ tomcat_log_dir }}"
+#    - "{{ tomcat_webapp_dir }}"
+#    - "{{ tomcat_app_deployment_dir }}"
+    
+#  - name: set Tomcat memory options
+#    lineinfile: dest=/etc/default/tomcat7 regexp='(^JAVA_OPTS=)(\"-Djava\.awt\.headless=true\s\-Xmx128m\s-XX\:\+UseConcMarkSweepGC\")' line='\1\"-Djava.awt.headless=true -Xmx{{ tomcat_xmx }} -Xms{{ tomcat_xms }} -XX:MaxPermSize={{ tomcat_maxpermsize }} -XX:+UseConcMarkSweepGC\"' backrefs=yes
+  - name: set Tomcat memory options
+    template: src=setenv.sh.j2 dest="{{ tomcat_path }}/bin/setenv.sh" mode=0755
+# this next step is based on the assumption that Tomcat has been installed in a docker container  
+  - name: copy files from webapps_old to webapps
+    shell: /bin/cp -R {{ tomcat_path }}/webapps_old/* {{ tomcat_path }}/webapps creates={{ tomcat_path }}/manager/index.jsp
+  
+     
+  

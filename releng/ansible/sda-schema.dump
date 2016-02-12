@@ -1,0 +1,163 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.3.10
+-- Dumped by pg_dump version 9.3.10
+-- Started on 2016-02-11 14:02:43 CST
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 175 (class 3079 OID 11787)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2008 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 174 (class 1259 OID 16497)
+-- Name: copy_references; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE copy_references (
+    ref_id character varying(255) NOT NULL,
+    reference json,
+    active boolean DEFAULT true NOT NULL,
+    created timestamp without time zone DEFAULT now(),
+    modified timestamp without time zone,
+    state character varying(32) DEFAULT 'ACTIVE'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.copy_references OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 16439)
+-- Name: id_table; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE id_table (
+    context character varying(255) NOT NULL,
+    next_id bigint
+);
+
+
+ALTER TABLE public.id_table OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 16387)
+-- Name: people; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE people (
+    id character varying(255) NOT NULL,
+    historical_figure json,
+    active boolean DEFAULT true NOT NULL,
+    state character varying(32) DEFAULT 'ACTIVE'::character varying NOT NULL,
+    created timestamp without time zone DEFAULT now(),
+    modified timestamp without time zone
+);
+
+
+ALTER TABLE public.people OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 16470)
+-- Name: relationships; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE relationships (
+    id character varying NOT NULL,
+    relationship json,
+    active boolean DEFAULT true,
+    created timestamp without time zone DEFAULT now(),
+    modified timestamp without time zone
+);
+
+
+ALTER TABLE public.relationships OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 16399)
+-- Name: works; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE works (
+    id character varying(255) NOT NULL,
+    work json,
+    active boolean DEFAULT true NOT NULL,
+    state character varying(32) DEFAULT 'ACTIVE'::character varying NOT NULL,
+    created timestamp without time zone DEFAULT now(),
+    modified timestamp without time zone
+);
+
+
+ALTER TABLE public.works OWNER TO postgres;
+
+--
+-- TOC entry 1889 (class 2606 OID 16443)
+-- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY people
+    ADD CONSTRAINT people_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1893 (class 2606 OID 16479)
+-- Name: relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY relationships
+    ADD CONSTRAINT relationships_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1891 (class 2606 OID 16453)
+-- Name: works_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY works
+    ADD CONSTRAINT works_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2007 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-02-11 14:02:52 CST
+
+--
+-- PostgreSQL database dump complete
+--
+

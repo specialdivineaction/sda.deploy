@@ -1,0 +1,71 @@
+---
+# Install java on localhost
+- hosts: localhost
+  vars:
+    tomcat_major: 7
+    tomcat_version: 7.0.67
+    tomcat_tgz_url: http://www.apache.org/dist/tomcat/tomcat-{{ tomcat_major }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
+    tomcat_path: /usr/local/tomcat
+  tasks:
+  - block:
+    - name: add repository for Oracle JRE
+      apt_repository: repo="ppa:webupd8team/java" update_cache=yes
+    - name: accept the user agreement
+      debconf: name='oracle-java8-installer' question='shared/accepted-oracle-license-v1-1' value='true' vtype='select'
+    - name: install Oracle JRE - version 1.8 and set as default
+      apt: pkg="{{ item }}" state=present
+      with_items:
+      - oracle-java8-installer
+      - oracle-java8-set-default
+    - name: check to see if JAVA_HOME is added to /etc/environment or not
+      shell: "/bin/grep -q JAVA_HOME /etc/environment && echo 'True' || echo 'False'"
+      register: java_home_exists
+      changed_when: "java_home_exists.stdout=='False'"
+    - name: add JAVA_HOME environment variable in /etc/environment
+      lineinfile: dest=/etc/environment insertafter=EOF line="JAVA_HOME=/usr/lib/jvm/java-8-oracle"
+      when: java_home_exists.stdout=='False'
+      tags: java
+    tags: java
+
+# install Tomcat   
+  - block:
+    - name: create catalina_home
+      file: path="/tmp{{ tomcat_path }}" state=directory
+    - name: get GPG keys
+      command: >
+        /usr/bin/gpg --keyserver pool.sks-keyservers.net --recv-keys
+        05AB33110949707C93A279E3D3EFE6B686867BA6
+        07E48665A34DCAFAE522E5E6266191C37C037D42
+        47309207D818FFD8DCD3F83F1931D684307A10A5
+        541FBE7D8F78B25E055DDEE13C370389288584E7
+        61B832AC2F1C5A90F0F9B00A1C506407564C17A3
+        713DA88BE50911535FE716F5208B0AB1D63011C7
+        79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED
+        9BA44C2621385CB966EBA586F72C284D731FABEE
+        A27677289986DB50844682F8ACB77FC2E86E29AC
+        A9C5DF4D22E99998D9875A5110C01C5A2F6059E7
+        DCFD35E0BF8CA7344752DE8B6FB21E8933C60243
+        F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE
+        F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23
+      ignore_errors: yes
+    - name: get Tomcat tarball
+      get_url: url="{{ tomcat_tgz_url }}" dest="/tmp{{ tomcat_path }}/tomcat.tar.gz"
+    - name: get Tomcat tarball gpg file
+      get_url: url="{{ tomcat_tgz_url }}.asc" dest="/tmp{{ tomcat_path }}/tomcat.tar.gz.asc"
+    - name: verify tomcat file with gpg
+      command: "/usr/bin/gpg --verify /tmp{{ tomcat_path }}/tomcat.tar.gz.asc"
+      register: tomcat_gpg
+      ignore_errors: yes
+    - name: extract tar file
+      command: "/bin/tar -xvf /tmp{{ tomcat_path }}/tomcat.tar.gz --directory /tmp{{ tomcat_path }} --strip-components=1"
+    - name: remove batch files
+      shell: "/bin/rm /tmp{{ tomcat_path }}/bin/*.bat"
+    - name: remove downloaded files
+      shell: "/bin/rm /tmp{{ tomcat_path }}/tomcat.tar.gz*"
+    - name: rename webapps folder
+      command: /bin/mv /tmp{{ tomcat_path }}/webapps /tmp{{ tomcat_path }}/webapps_old creates=/tmp{{ tomcat_path }}/webapps_old    
+    - name: create webapps directory
+      file: path="/tmp{{ tomcat_path }}/webapps" state=directory mode=0755
+    - name: move tomcat files to correct location
+      command: /bin/mv /tmp{{ tomcat_path }} {{ tomcat_path }}      
+    tags: tomcat

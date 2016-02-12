@@ -1,0 +1,108 @@
+<VirtualHost *:80>
+        ServerAdmin {{ admin_email }}
+        ServerName {{ host_name }}.{{ dns_suffix }}
+
+        DocumentRoot /var/www/html
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/html/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Require all granted
+        </Directory>
+
+        ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+        <Directory "/usr/lib/cgi-bin">
+                AllowOverride None
+                Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+                Require all granted
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Require ip 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+    
+#### Begin SDA config
+
+    ProxyRequests Off
+    ProxyPreserveHost On
+
+    <Proxy *>
+        Require all granted
+    </Proxy>
+
+
+    <Location /solr/>
+        Require all granted
+        ProxyPass           http://localhost:8983/solr/ retry=0
+        ProxyPassReverse    http://localhost:8983/solr/
+    </Location>
+    
+#    <Location /solr/HathiFiles/>
+#        Require all granted
+#        ProxyPass           http://localhost:8984/solr/ retry=0
+#        ProxyPassReverse    http://localhost:8984/solr/
+#    </Location>
+
+    <Location /api/catalog/>
+        Require all granted
+        ProxyPass           ajp://localhost:8009/catalog/services/ retry=0
+        ProxyPassReverse    ajp://localhost:8009/catalog/services/
+    </Location>
+    
+    
+    # Catalog Entry Admin Tools #
+    Alias /catalog/admin/ {{ project_directory }}/web/catalog-admin/
+    <Directory {{ project_directory }}/web/catalog-admin/>
+        #AuthType Basic
+        #AuthName "SDA Login"
+        # (Following line optional)
+        #AuthBasicProvider file
+        #AuthUserFile file.passwd
+        #Require valid-user
+        Require all granted
+    </Directory>
+    
+    # Splash site #
+    Alias / {{ project_directory }}/web/splash-site/
+    <Directory {{ project_directory }}/web/splash-site/>
+      Require all granted
+    </Directory>
+
+##### End SDA config  
+    
+    
+#    RewriteEngine On
+#
+#    # force everything else to https
+#    RewriteCond %{HTTPS} off
+#    RewriteCond %{REQUEST_URI} !(/tomcat-solr/)
+#    RewriteCond %{REQUEST_URI} !(/tomcat-hathi/)
+#    RewriteCond %{REQUEST_URI} !(/tomcat-sda/)
+#    
+#    RewriteRule (.*) https://%{SERVER_NAME}$1 [R,L]
+
+
+    <Location /tomcat-sda/>
+        # It is recommended to enable this next line to restrict access to tomcat manager to the local subnet
+        #Require ip {{ local_subnet }}
+        ProxyPass                       http://localhost:8080/ retry=0
+        ProxyPassReverse                http://localhost:8080/
+        #SetOutputFilter proxy-html
+        #ProxyHtmlURLMap ^/(.*)$                 /tomcat-sda/$1 R
+    </Location>
+
+</VirtualHost>

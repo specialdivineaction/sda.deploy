@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.EquinoxLauncher">
 <setAttribute key="additional_plugins">
-<setEntry value="com.eclipsesource.jaxrs.publisher:4.1.0.201407131319:5:true"/>
-<setEntry value="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider:2.3.1:4:true"/>
-<setEntry value="org.eclipse.equinox.common:3.6.200.v20130402-1505:2:true"/>
-<setEntry value="org.eclipse.osgi:3.10.0.v20140606-1445:-1:true"/>
+<setEntry value="com.eclipsesource.jaxrs.publisher:5.3.1.201602281253:5:false"/>
+<setEntry value="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider:2.3.1:4:false"/>
+<setEntry value="org.eclipse.equinox.common:3.7.0.v20150402-1709:2:false"/>
+<setEntry value="org.eclipse.osgi:3.10.102.v20160118-1700:-1:false"/>
 </setAttribute>
 <booleanAttribute key="append.args" value="true"/>
 <booleanAttribute key="automaticAdd" value="true"/>
@@ -29,8 +29,9 @@
 <setAttribute key="selected_features">
 <setEntry value="edu.tamu.tcat.oss.jetty.feature:default"/>
 <setEntry value="edu.tamu.tcat.sda.catalog.war.feature:default"/>
+<setEntry value="edu.tamu.tcat.trc.base.feature:default"/>
 </setAttribute>
-<booleanAttribute key="show_selected_only" value="false"/>
+<booleanAttribute key="show_selected_only" value="true"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="true"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>

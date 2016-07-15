@@ -46,7 +46,11 @@
 
 
     <Location /solr/>
+        {% if solr_public == true %}
         Require all granted
+        {% else %}
+        Require ip 127.0.0.1 {{ docker_subnet }}
+        {% endif %}
         ProxyPass           http://localhost:8983/solr/ retry=0
         ProxyPassReverse    http://localhost:8983/solr/
     </Location>
@@ -84,18 +88,14 @@
 
 ##### End SDA config  
     
+{% if ssl_enabled == true %}    
+    RewriteEngine On
+
+    # force everything else to https
+    RewriteCond %{HTTPS} off
     
-#    RewriteEngine On
-#
-#    # force everything else to https
-#    RewriteCond %{HTTPS} off
-#    RewriteCond %{REQUEST_URI} !(/tomcat-solr/)
-#    RewriteCond %{REQUEST_URI} !(/tomcat-hathi/)
-#    RewriteCond %{REQUEST_URI} !(/tomcat-sda/)
-#    
-#    RewriteRule (.*) https://%{SERVER_NAME}$1 [R,L]
-
-
+    RewriteRule (.*) https://%{SERVER_NAME}$1 [R,L]
+{% else %}
     <Location /tomcat-sda/>
         # It is recommended to enable this next line to restrict access to tomcat manager to the local subnet
         #Require ip {{ local_subnet }}
@@ -104,5 +104,8 @@
         #SetOutputFilter proxy-html
         #ProxyHtmlURLMap ^/(.*)$                 /tomcat-sda/$1 R
     </Location>
+{% endif %}
+
+
 
 </VirtualHost>

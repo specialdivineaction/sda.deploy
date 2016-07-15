@@ -11,22 +11,24 @@
 # Edit these variables as needed
     # this is the project directory in which the sda.deploy repo is checked out into
     project_directory: /sda 
-    # this should be named according to the SDA WAR file 
+    # this should be named according to the SDA WAR file. This will be used to copy the dex WAR file to the correct location for running
     sda_war: catalog.war
-    # this should be the email address of the server admin
+    # this should be the email address of the server admin.  It will be used in the Apache configuration
     admin_email: admin@nowhere.com
     # The default password for the postgres user for Postgresql will be set to this value
     pg_password: reallyinsecurepasswordchangeme!
-    # next line needs to be in CIDR notation - used for various access restrictions
+    # next line needs to be in CIDR notation - used for various access restrictions (including Postgresql, Apache...)
     local_subnet: xxx.xxx.xxx.0/24
     # it is unlikely that you will need to change the Docker values
+    # this value defines the IP address of the network bridge that Docker creates
     # next line needs to be in CIDR notation
     docker_bridge_ip: 172.22.22.1/24
-    # next line needs to be in CIDR notation - used for various access restrictions
+    # next line needs to be in CIDR notation - used for various access restrictions (including Postgresql, Apache...)
+    # this value defines the IP address range from which all Docker containers will be assigned
     docker_subnet: 172.22.22.0/24
-    # set this to the host name for this host
+    # set this to the host name for this host - used in Apache config
     host_name: sda
-    # set this to the DNS suffix of this host
+    # set this to the DNS suffix of this host - used in Apache config
     dns_suffix: test.com
     # together the above 2 variables form the FQDN of this host - i.e. sda.test.com
     # set this to the filename of the SSL intermediate certificate
@@ -35,6 +37,10 @@
     ssl_cert: sda.test.com.cer
     # set this to the filename of the SSL key
     ssl_key: sda.test.com.key
+    # set this to true to enable access to Solr admin - *NOT* recommended for production use - *ONLY* for debugging!
+    solr_public: false
+    # set this to false to disable SSL - Note that this is *NOT* recommended
+    ssl_enabled: true
 # probably don't need to edit below this line
 ##############################################################    
     # These are the paths for the docker container files - it is unlikely that you will need to change them
@@ -136,6 +142,7 @@
     - name: copy SSL key file
       #get_url: url="{{ ssl_key }}" dest="/etc/ssl/private/" mode=0640 group=ssl-cert
       copy: remote_src=yes src="{{ ssl_key }}" dest="/etc/ssl/private/" mode=0640 group=ssl-cert 
+    when: ssl_enabled == true
     ignore_errors: yes
     tags: ssl_cert
     
@@ -164,7 +171,8 @@
     - name: install headers module
       apache2_module: name=headers state=present
     - name: enable the ssl site in apache in 14.04
-      command: /usr/sbin/a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl.conf 
+      command: /usr/sbin/a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl.conf
+      when: ssl_enabled == true 
     tags: webserver
 
 # install Docker
@@ -240,6 +248,10 @@
       command: /usr/sbin/a2ensite {{ item.value.vhost }} creates={{ item.value.path }}
       with_dict: config_setup_apachehosts | default({})
       ignore_errors: yes
+    - name: remove SSL site if disabled
+      command: /usr/sbin/a2dissite default-ssl
+      ignore_errors: yes
+      when: ssl_enabled == false
     tags: config_setup 
 
 # copy sda WAR to correct location
@@ -248,6 +260,21 @@
       copy: remote_src=yes src="{{ sda_war }}" dest="/tomcat/sda/webapps"
     ignore_errors: yes
     tags: copy_sda
+
+# restart services
+  - block:
+    - name: restart Apache
+      service: name=apache2 state=restarted
+    - name: restart Postgresql
+      service: name=postgresql state=restarted
+    - name: stop docker
+      service: name=docker state=stopped
+    - name: delete old docker bridge
+      command: ip link del docker0
+    - name: start docker
+      service: name=docker state=started
+      ignore_errors: yes
+    tags: restart_service   
     
 # pull docker images and start containers
   - block:

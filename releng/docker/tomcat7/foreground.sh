@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export ANSIBLE_LIBRARY=/usr/share/ansible
+source /usr/local/bin/ansible/hacking/env-setup
 
-/usr/bin/ansible-playbook /tmp/launch_tomcat7_docker.yml -c local
+/usr/local/bin/ansible/bin/ansible-playbook /tmp/launch_tomcat7_docker.yml -c local
 
-exec /usr/local/tomcat/bin/catalina.sh run
+exec /usr/local/bin/gosu $TOMCAT_USER /usr/local/tomcat/bin/catalina.sh run

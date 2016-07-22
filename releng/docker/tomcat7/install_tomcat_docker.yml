@@ -3,8 +3,8 @@
 - hosts: localhost
   vars:
     tomcat_major: 7
-    tomcat_version: 7.0.67
-    tomcat_tgz_url: http://www.apache.org/dist/tomcat/tomcat-{{ tomcat_major }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
+    tomcat_version: 7.0.70
+    tomcat_tgz_url: https://archive.apache.org/dist/tomcat/tomcat-{{ tomcat_major }}/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz
     tomcat_path: /usr/local/tomcat
   tasks:
   - block:

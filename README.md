@@ -9,6 +9,7 @@ They also assumes that you have copied the catalog.war and SSL cert pieces to th
 Basic steps to run ansible playbook
 
 * sudo su
+* aptitude update
 * aptitude install git software-properties-common python-six python-software-properties python-apt python-pycurl python-jinja2 python-yaml python-setuptools
 * cd /tmp
 * git clone git://github.com/ansible/ansible.git --recursive

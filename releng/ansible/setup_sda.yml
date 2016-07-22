@@ -219,7 +219,7 @@
   - block:
     - name: create directories for containers 
       file: path="{{ item }}" state=directory
-      with_items: container_directories
+      with_items: "{{ container_directories }}"
    # if this file exists, then we are running this for the first time
     - name: get stats on default config
       stat: path=/etc/apache2/sites-available/000-default.conf
@@ -242,11 +242,11 @@
     - name: install templated apache config
       #file: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('no') }}" state=link
       template: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('yes') }}"
-      with_dict: symlinks
+      with_dict: "{{ symlinks }}"
       ignore_errors: yes
     - name: enable sites in Apache
       command: /usr/sbin/a2ensite {{ item.value.vhost }} creates={{ item.value.path }}
-      with_dict: config_setup_apachehosts | default({})
+      with_dict: "{{ config_setup_apachehosts | default({}) }}"
       ignore_errors: yes
     - name: remove SSL site if disabled
       command: /usr/sbin/a2dissite default-ssl
@@ -282,11 +282,11 @@
       - name: build docker sda tomcat image
         docker_image: path="{{ project_directory }}/releng/docker/tomcat7" name="sda/tomcat7" state=present
       - name: start sda container
-        docker:
+        docker_container:
           name: sda
           image: sda/tomcat7
           state: started
-          ports:
+          published_ports:
           - "127.0.0.1:8080:8080"
           - "127.0.0.1:8009:8009"
           restart_policy: always
@@ -296,7 +296,7 @@
           - "/tomcat/sda/webapps:/usr/local/tomcat/webapps:rw"
           - "/tomcat/sda/logs:/usr/local/tomcat/logs:rw"
           - "{{ project_directory }}:/war-deployment/sda.deploy:rw"
-          memory_limit: "768MB"
+          memory: 768MB
           env:
             tomcat_xmx: 768m
             tomcat_xms: 256m
@@ -306,11 +306,11 @@
       - name: build docker sda solr image
         docker_image: path="{{ project_directory }}/releng/docker/solr" name="sda/solr" state=present       
       - name: start solr container
-        docker:
+        docker_container:
           name: solr
           image: sda/solr
           state: started
-          ports:
+          published_ports:
           - "127.0.0.1:8983:8983"
           restart_policy: always
           volumes:
@@ -321,19 +321,19 @@
           - "{{ project_directory }}/solr/volumes:/opt/solr/server/solr/volumes:rw"
           - "{{ project_directory }}/solr/works:/opt/solr/server/solr/works:rw"
           - "{{ project_directory }}/solr/HathiFiles:/opt/solr/server/solr/HathiFiles:rw"
-          memory_limit: "512MB"
+          memory: 512MB
         tags: solr_container
 #      - block:
 #        - name: start hathi solr container
-#          docker:
+#          docker_container:
 #            name: hathi
 #            image: sda/solr
 #            state: started
-#            ports:
+#            published_ports:
 #            - "8984:8983"
 #            restart_policy: always
 #            volumes:
 #            - "{{ project_directory }}/solr/HathiFiles:/opt/solr/server/solr/HathiFiles:rw"
-#            memory_limit: "512MB"
+#            memory: 512MB
 #          tags: hathi_container
     tags: launch_containers  

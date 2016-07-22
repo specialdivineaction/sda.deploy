@@ -1,18 +1,40 @@
 ---
-# Launch Tomcat 7
+# Launch Tomcat 7 or 8 
 - hosts: localhost
+  vars:
+    tomcat_7or8: 7
     
   tasks:
   - name: set path for tomcat install
     set_fact: tomcat_path=/usr/local/tomcat
-  - name: override values for tomcat variables
-    set_fact: "{{ item.var }}={{ item.val }}"
-    with_items:
-      - { var: "tomcat_xmx", val: "{{ ansible_env.tomcat_xmx | default('128m') }}" }
-      - { var: "tomcat_xms", val: "{{ ansible_env.tomcat_xms | default('64m') }}" }
-      - { var: "tomcat_maxpermsize", val: "{{ ansible_env.tomcat_maxpermsize | default('64m') }}" }
-      - { var: "tomcat_log_dir", val: "{{ ansible_env.tomcat_log_dir | default('/usr/local/tomcat/logs') }}" }
-      - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
+  - block: 
+    - name: override values for tomcat variables
+      set_fact: "{{ item.var }}={{ item.val }}"
+      with_items:
+        - { var: "tomcat_xmx", val: "{{ ansible_env.tomcat_xmx | default('128m') }}" }
+        - { var: "tomcat_xms", val: "{{ ansible_env.tomcat_xms | default('64m') }}" }
+        - { var: "tomcat_maxpermsize", val: "{{ ansible_env.tomcat_maxpermsize | default('64m') }}" }
+        - { var: "tomcat_jvm_options", val: "{{ ansible_env.tomcat_jvm_options | default('') }}" }
+        - { var: "tomcat_directories", val: "{{ ansible_env.tomcat_directories | default('') }}" }
+        - { var: "tomcat_log_dir", val: "{{ ansible_env.tomcat_log_dir | default('/usr/local/tomcat/logs') }}" }
+        - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
+        - { var: "tomcat_user", val: "{{ ansible_env.TOMCAT_USER | default('tomcat7') }}" }
+        - { var: "tomcat_app_deployment_dir", val: "{{ ansible_env.tomcat_app_deployment_dir | default('/war-deployment/dashboard') }}" }
+    when: tomcat_7or8 == 7
+  - block: 
+    - name: override values for tomcat variables
+      set_fact: "{{ item.var }}={{ item.val }}"
+      with_items:
+        - { var: "tomcat_xmx", val: "{{ ansible_env.tomcat_xmx | default('128m') }}" }
+        - { var: "tomcat_xms", val: "{{ ansible_env.tomcat_xms | default('64m') }}" }
+        - { var: "tomcat_maxpermsize", val: "{{ ansible_env.tomcat_maxpermsize | default('64m') }}" }
+        - { var: "tomcat_jvm_options", val: "{{ ansible_env.tomcat_jvm_options | default('') }}" }
+        - { var: "tomcat_directories", val: "{{ ansible_env.tomcat_directories | default('') }}" }
+        - { var: "tomcat_log_dir", val: "{{ ansible_env.tomcat_log_dir | default('/usr/local/tomcat/logs') }}" }
+        - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
+        - { var: "tomcat_user", val: "{{ ansible_env.TOMCAT_USER | default('tomcat8') }}" }
+        - { var: "tomcat_app_deployment_dir", val: "{{ ansible_env.tomcat_app_deployment_dir | default('/war-deployment/dashboard') }}" }
+    when: tomcat_7or8 == 8
 #  - name: set permissions on files
 #    file: path={{ item }} owner=tomcat7 group=tomcat7 state=directory recurse=yes
 #    with_items:
@@ -23,10 +45,23 @@
 #  - name: set Tomcat memory options
 #    lineinfile: dest=/etc/default/tomcat7 regexp='(^JAVA_OPTS=)(\"-Djava\.awt\.headless=true\s\-Xmx128m\s-XX\:\+UseConcMarkSweepGC\")' line='\1\"-Djava.awt.headless=true -Xmx{{ tomcat_xmx }} -Xms{{ tomcat_xms }} -XX:MaxPermSize={{ tomcat_maxpermsize }} -XX:+UseConcMarkSweepGC\"' backrefs=yes
   - name: set Tomcat memory options
-    template: src=setenv.sh.j2 dest="{{ tomcat_path }}/bin/setenv.sh" mode=0755
+    template: src=/tmp/setenv.sh.j2 dest="{{ tomcat_path }}/bin/setenv.sh" mode=0755
 # this next step is based on the assumption that Tomcat has been installed in a docker container  
   - name: copy files from webapps_old to webapps
     shell: /bin/cp -R {{ tomcat_path }}/webapps_old/* {{ tomcat_path }}/webapps creates={{ tomcat_path }}/manager/index.jsp
+  - name: set permissions on tomcat files
+    file: path="{{ tomcat_path }}/{{ item }}" state=directory recurse=yes group="{{ tomcat_user }}" owner="{{ tomcat_user }}"
+    with_items:
+    - conf
+    - logs
+    - temp
+    - webapps
+    - work
+# Note, when passing paths, delimit with |. If there is only one path, you don't need the |    
+  - name: set permissions on additional folders
+    file: path="{{ item }}" state=directory recurse=yes group="{{ tomcat_user }}" owner="{{ tomcat_user }}"
+    with_items: "{{ tomcat_directories.split('|') }}"
+    when: tomcat_directories != ''
   
      
   

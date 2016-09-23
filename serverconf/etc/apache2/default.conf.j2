@@ -63,8 +63,8 @@
 
     <Location /api/catalog/>
         Require all granted
-        ProxyPass           ajp://localhost:8009/catalog/services/ retry=0
-        ProxyPassReverse    ajp://localhost:8009/catalog/services/
+        ProxyPass           ajp://localhost:8009/sda/services/ retry=0
+        ProxyPassReverse    ajp://localhost:8009/sda/services/
     </Location>
     
     

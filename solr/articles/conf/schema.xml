@@ -127,6 +127,7 @@
    <field name="author_id" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="mime_type" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="article_content" type="text_general" indexed="true" stored="true" storeOffsetsWithPositions="true" required="false" multiValued="false" />
+   <field name="article_abstract" type="text_general" indexed="true" stored="true" storeOffsetsWithPositions="true" required="false" multiValued="false" />
 
    <field name="article_dto" type="string" indexed="false" stored="true" required="false" multiValued="false" />
    

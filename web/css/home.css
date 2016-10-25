@@ -1,0 +1,670 @@
+.billboard .intro-text .slide .text .read-more:active, .billboard .intro-text .slide .text .read-more:focus, .billboard .intro-text .slide .text .read-more:hover {
+  text-decoration: underline; }
+
+.billboard .banners .banner {
+  *zoom: 1; }
+  .billboard .banners .banner:before {
+    content: ' ';
+    display: table; }
+  .billboard .banners .banner:after {
+    clear: both;
+    content: ' ';
+    display: table; }
+
+.billboard > .brow-container {
+  margin: 0 auto;
+  max-width: 1600px; }
+
+@font-face {
+  font-family: "CenturyStd-BookItalic";
+  src: url("../assets/fonts/CenturyStd-BookItalic.eot");
+  src: url("../assets/fonts/CenturyStd-BookItalic.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/CenturyStd-BookItalic.woff") format("woff"), url("../assets/fonts/CenturyStd-BookItalic.ttf") format("truetype"); }
+@font-face {
+  font-family: "CenturyStd-Book";
+  src: url("../assets/fonts/CenturyStd-Book.eot");
+  src: url("../assets/fonts/CenturyStd-Book.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/CenturyStd-Book.woff") format("woff"), url("../assets/fonts/CenturyStd-Book.ttf") format("truetype"); }
+.billboard .banners .banner .container .content h2, .billboard > .brow-container .brow a.play-video .video-details .length, .billboard .intro-text .slide .leadin {
+  font-family: "CenturyStd-Book";
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "AvenirLTStd-Heavy";
+  src: url("../assets/fonts/AvenirLTStd-Heavy.eot");
+  src: url("../assets/fonts/AvenirLTStd-Heavy.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/AvenirLTStd-Heavy.woff") format("woff"), url("../assets/fonts/AvenirLTStd-Heavy.ttf") format("truetype"); }
+.billboard .intro-text .slide .text .read-more, .main-nav .buckets .bucket, .main-nav .modules .module .controls {
+  font-family: "AvenirLTStd-Heavy";
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "AvenirLTStd-Roman";
+  src: url("../assets/fonts/AvenirLTStd-Roman.eot");
+  src: url("../assets/fonts/AvenirLTStd-Roman.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/AvenirLTStd-Roman.woff") format("woff"), url("../assets/fonts/AvenirLTStd-Roman.ttf") format("truetype"); }
+.billboard .banners .banner .container .content.basic-title p.subtitle, .billboard .banners .banner .container .content.upper-box p.blurb {
+  font-family: "AvenirLTStd-Roman";
+  font-weight: normal;
+  font-style: normal; }
+
+.billboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%; }
+  .billboard .banners {
+    flex-grow: 1;
+    align-self: stretch;
+    position: relative;
+    background-color: #000; }
+    .billboard .banners .next, .billboard .banners .prev {
+      color: #fff;
+      text-decoration: none;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20%;
+      z-index: 2;
+      opacity: 0.3;
+      transition: 400ms;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0.5em;
+      font-size: 300%; }
+      .billboard .banners .next:hover, .billboard .banners .prev:hover {
+        opacity: 1; }
+      .billboard .banners .next:active, .billboard .banners .next:focus, .billboard .banners .prev:active, .billboard .banners .prev:focus {
+        outline: 0; }
+    .billboard .banners .prev {
+      left: 0;
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+      align-items: flex-start; }
+    .billboard .banners .next {
+      right: 0;
+      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+      align-items: flex-end; }
+    .billboard .banners .banner {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1;
+      opacity: 1;
+      transition: opacity linear 0.5s;
+      background-repeat: no-repeat;
+      background-position: top center;
+      background-size: cover; }
+      .billboard .banners .banner.ng-hide {
+        opacity: 0; }
+      .billboard .banners .banner .container {
+        position: relative;
+        flex-grow: 1;
+        width: 100%; }
+        .billboard .banners .banner .container .content {
+          position: absolute;
+          color: white;
+          padding: 1rem;
+          bottom: 10%;
+          /* Slide content is implemented using several different core templates.
+           * Each template provides slots for different textual elements and lays
+           * that text out appropriately to handle different page-widths. This is
+           * designed to accomodate different image types and content needs flexibly
+           * without requiring CSS to tailor the experience for each new slide.
+           */
+          /* A slide with a simple title and sub-title approximately 2/3 down the image.
+           * This template provide for two main content elements
+           *  - title:    Typically 2 to 5 words, large font
+           *  - subtitle  Smaller font, about 80-120 characters. May be manually split
+           *              over two or three lines.
+           *
+           * Class: basic-title
+           * Variants
+           *  - .right    Display the text on the right-hand edge of the slide
+           *  - .textbg   Add a background shading under the text to improve legibility
+           */ }
+          .billboard .banners .banner .container .content.basic-title p.subtitle {
+            font-size: 0.9em;
+            margin: 1em 0 0; }
+            .billboard .banners .banner .container .content.basic-title p.subtitle p.subtitle {
+              display: none; }
+          .billboard .banners .banner .container .content.basic-title.right {
+            right: 1rem;
+            text-align: left; }
+          .billboard .banners .banner .container .content.basic-title.textbg {
+            background-color: rgba(26, 27, 26, 0.5); }
+          @media only all and (min-width: 20em) {
+            .billboard .banners .banner .container .content.basic-title {
+              font-size: 1.125em; } }
+          @media only all and (min-width: 40em) {
+            .billboard .banners .banner .container .content.basic-title {
+              font-size: 1.25em; } }
+          @media only all and (min-width: 60em) {
+            .billboard .banners .banner .container .content.basic-title {
+              font-size: 1.5em; } }
+          @media only all and (min-width: 80em) {
+            .billboard .banners .banner .container .content.basic-title {
+              font-size: 1.75em; } }
+          .billboard .banners .banner .container .content.upper-box {
+            color: white;
+            top: 1rem;
+            left: 1rem;
+            bottom: auto;
+            padding: 5% 1rem 1em;
+            display: inline-block; }
+            .billboard .banners .banner .container .content.upper-box h2 {
+              font-size: 1.5em; }
+            .billboard .banners .banner .container .content.upper-box h3 {
+              color: white;
+              font-size: 1.1em;
+              margin-left: 1em;
+              margin-top: 0.25em;
+              margin-bottom: 1em; }
+            .billboard .banners .banner .container .content.upper-box p.blurb {
+              color: white;
+              font-size: 0.8em;
+              margin: 0.5em 0 0;
+              padding-right: 3em; }
+            .billboard .banners .banner .container .content.upper-box.right {
+              right: 1rem;
+              left: auto;
+              text-align: left; }
+            .billboard .banners .banner .container .content.upper-box.textbg {
+              background-color: rgba(26, 27, 26, 0.35); }
+              .billboard .banners .banner .container .content.upper-box.textbg-copper {
+                background-color: rgba(184, 133, 84, 0.5); }
+            @media only all and (min-width: 20em) {
+              .billboard .banners .banner .container .content.upper-box {
+                max-width: 80%;
+                font-size: 1.125em;
+                padding-top: 7.5%; } }
+            @media only all and (min-width: 30em) {
+              .billboard .banners .banner .container .content.upper-box {
+                padding-top: 2rem; }
+                .billboard .banners .banner .container .content.upper-box p.blurb {
+                  display: block; } }
+            @media only all and (min-width: 40em) {
+              .billboard .banners .banner .container .content.upper-box {
+                font-size: 1.25em; } }
+            @media only all and (min-width: 60em) {
+              .billboard .banners .banner .container .content.upper-box {
+                font-size: 1.5em; } }
+            @media only all and (min-width: 80em) {
+              .billboard .banners .banner .container .content.upper-box {
+                font-size: 1.75em; } }
+          .billboard .banners .banner .container .content.showsize h2:before {
+            content: 'sm '; }
+            @media only all and (min-width: 20em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '20 '; } }
+            @media only all and (min-width: 30em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '30 '; } }
+            @media only all and (min-width: 40em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '40 '; } }
+            @media only all and (min-width: 50em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '50 '; } }
+            @media only all and (min-width: 60em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '60 '; } }
+            @media only all and (min-width: 70em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '70 '; } }
+            @media only all and (min-width: 80em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '80 '; } }
+            @media only all and (min-width: 90em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '90 '; } }
+            @media only all and (min-width: 100em) {
+              .billboard .banners .banner .container .content.showsize h2:before {
+                content: '100 '; } }
+          .billboard .banners .banner .container .content h2 {
+            color: white;
+            font-size: 2.1em;
+            line-height: 1;
+            margin: 0; }
+            @media only all and (min-width: 40em) {
+              .billboard .banners .banner .container .content h2 {
+                font-size: 2.4em; } }
+  .billboard > .brow-container {
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row; }
+    @media only screen and (min-width: 51em) {
+      .billboard > .brow-container {
+        justify-content: flex-end; } }
+    .billboard > .brow-container .brow {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      align-content: stretch;
+      background-color: #a47140;
+      border-bottom: 4px solid #dcc3ab;
+      max-height: 50px;
+      min-height: 50px;
+      overflow: hidden;
+      padding: 0 0.5rem; }
+      @media only all and (min-width: 51em) {
+        .billboard > .brow-container .brow {
+          width: 60%;
+          flex-grow: 0;
+          align-self: flex-end; } }
+      .billboard > .brow-container .brow a.play-video {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        color: white;
+        font-size: 0.9em;
+        overflow: hidden; }
+        .billboard > .brow-container .brow a.play-video img {
+          vertical-align: middle; }
+        .billboard > .brow-container .brow a.play-video .video-details {
+          padding-left: 0.5em; }
+          .billboard > .brow-container .brow a.play-video .video-details .title {
+            font-size: 0.7em;
+            text-transform: uppercase; }
+            @media only all and (min-width: 35em) {
+              .billboard > .brow-container .brow a.play-video .video-details .title {
+                font-size: 1em; } }
+            @media only all and (min-width: 40em) {
+              .billboard > .brow-container .brow a.play-video .video-details .title {
+                font-size: 0.9em; } }
+          .billboard > .brow-container .brow a.play-video .video-details .length {
+            color: #513922;
+            display: none; }
+            @media only all and (min-width: 51em) {
+              .billboard > .brow-container .brow a.play-video .video-details .length {
+                color: #634629;
+                display: inline-block; } }
+      .billboard > .brow-container .brow ol.control-nav {
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        line-height: 1;
+        text-align: right; }
+        .billboard > .brow-container .brow ol.control-nav > li {
+          display: inline-block;
+          margin: 0 5px; }
+          .billboard > .brow-container .brow ol.control-nav > li:last-child {
+            margin-right: 0; }
+          .billboard > .brow-container .brow ol.control-nav > li a {
+            overflow: hidden;
+            text-indent: 100%;
+            white-space: nowrap;
+            background: #b88554;
+            border-radius: 50%;
+            display: block;
+            height: 20px;
+            width: 20px;
+            transition: 400ms; }
+            .billboard > .brow-container .brow ol.control-nav > li a.active {
+              cursor: default; }
+            .billboard > .brow-container .brow ol.control-nav > li a.active, .billboard > .brow-container .brow ol.control-nav > li a:active, .billboard > .brow-container .brow ol.control-nav > li a:focus, .billboard > .brow-container .brow ol.control-nav > li a:hover {
+              background-color: white; }
+            @media only all and (min-width: 51em) {
+              .billboard > .brow-container .brow ol.control-nav > li a {
+                background: #b88554;
+                position: relative;
+                z-index: 2; } }
+  .billboard .intro-text {
+    display: flex;
+    color: #484b47;
+    line-height: 2;
+    max-width: 40em;
+    padding: 2rem 1.5rem 3rem; }
+    @media only all and (min-width: 51em) {
+      .billboard .intro-text {
+        clear: both;
+        max-width: none;
+        padding: 0 0 3rem; } }
+    .billboard .intro-text .slide {
+      display: flex;
+      flex-direction: column; }
+      @media only all and (min-width: 51em) {
+        .billboard .intro-text .slide {
+          flex-direction: row; } }
+      .billboard .intro-text .slide .leadin {
+        flex: 1;
+        background-color: white;
+        color: #20251f;
+        font-size: 1.2em;
+        line-height: 1.6;
+        overflow: hidden; }
+        .billboard .intro-text .slide .leadin p {
+          margin: 0; }
+        @media only all and (min-width: 40em) {
+          .billboard .intro-text .slide .leadin {
+            font-size: 1.35em; } }
+        @media only all and (min-width: 50em) {
+          .billboard .intro-text .slide .leadin {
+            font-size: 1.5em; } }
+        @media only all and (min-width: 51em) {
+          .billboard .intro-text .slide .leadin {
+            padding: 1rem 2rem; } }
+        @media only all and (min-width: 60em) {
+          .billboard .intro-text .slide .leadin {
+            font-size: 1.65em;
+            padding-top: 2rem; } }
+      .billboard .intro-text .slide .text {
+        flex: 1.5;
+        display: none; }
+        @media only all and (min-width: 51em) {
+          .billboard .intro-text .slide .text {
+            padding: 1rem 3rem;
+            display: block; } }
+        .billboard .intro-text .slide .text .read-more {
+          font-size: 0.75em;
+          letter-spacing: 2px;
+          text-decoration: none;
+          text-transform: uppercase;
+          white-space: nowrap; }
+
+.main-nav {
+  background-color: #f2f2f0; }
+  .main-nav .buckets {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    @media only all and (min-width: 960px) {
+      .main-nav .buckets {
+        min-width: 300px;
+        max-width: 300px; } }
+    .main-nav .buckets .bucket {
+      background-color: #b88554;
+      border-bottom: 1px solid #a47140; }
+      .main-nav .buckets .bucket:last-child {
+        border-bottom: 0; }
+      .main-nav .buckets .bucket.active {
+        background-color: #a47140; }
+      @media only all and (min-width: 31em) {
+        .main-nav .buckets .bucket {
+          border: 0;
+          border-right: 1px solid #a47140; }
+          .main-nav .buckets .bucket:last-child {
+            border-right: 0; } }
+      @media only all and (min-width: 64em) {
+        .main-nav .buckets .bucket {
+          border-bottom: 1px solid #a47140;
+          border-right: 0; }
+          .main-nav .buckets .bucket:last-child {
+            border-bottom: 0; } }
+      .main-nav .buckets .bucket a {
+        color: #fff;
+        font-size: 1em;
+        line-height: 1.8;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 1.5rem; }
+        .main-nav .buckets .bucket a:active, .main-nav .buckets .bucket a:focus, .main-nav .buckets .bucket a:hover {
+          text-decoration: none; }
+  .main-nav .modules {
+    position: relative; }
+    .main-nav .modules .module {
+      opacity: 1;
+      transition: opacity 0.4s;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0; }
+      .main-nav .modules .module.ng-hide {
+        opacity: 0; }
+      .main-nav .modules .module .controls {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: #e8e7e3;
+        text-transform: uppercase;
+        border-bottom: 4px solid #dfddd5;
+        font-size: 0.9em; }
+        .main-nav .modules .module .controls li {
+          padding: 1rem 1.5rem;
+          text-align: center;
+          border: 1px solid #dfddd5; }
+          @media only all and (min-width: 50em) {
+            .main-nav .modules .module .controls li {
+              border: 0;
+              line-height: 1.2; } }
+          .main-nav .modules .module .controls li.active a {
+            color: #b88554; }
+            @media only all and (min-width: 50em) {
+              .main-nav .modules .module .controls li.active a {
+                color: #b88554;
+                box-sizing: border-box; }
+                .main-nav .modules .module .controls li.active a:before {
+                  background-color: white;
+                  left: 0;
+                  bottom: -1.2rem;
+                  content: '';
+                  display: block;
+                  height: 4px;
+                  position: absolute;
+                  width: 100%; } }
+          .main-nav .modules .module .controls li a {
+            color: #acaaa3;
+            position: relative;
+            text-decoration: none; }
+            .main-nav .modules .module .controls li a:active, .main-nav .modules .module .controls li a:focus, .main-nav .modules .module .controls li a:hover {
+              color: #b88554;
+              outline: 0; }
+      .main-nav .modules .module .panels {
+        position: relative; }
+        .main-nav .modules .module .panels .panel-set {
+          opacity: 1;
+          transition: opacity 0.4s;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0; }
+          .main-nav .modules .module .panels .panel-set.ng-hide {
+            opacity: 0; }
+          .main-nav .modules .module .panels .panel-set .layout-row.border > * {
+            border-top: 2px dotted #bbb; }
+            @media only all and (min-width: 600px) {
+              .main-nav .modules .module .panels .panel-set .layout-row.border > * {
+                border-top: none;
+                border-left: 2px dotted #bbb; } }
+            .main-nav .modules .module .panels .panel-set .layout-row.border > *:first-child {
+              border-top: none;
+              border-left: none; }
+          .main-nav .modules .module .panels .panel-set .layout-column.border > * {
+            border-top: 2px dotted #bbb; }
+            .main-nav .modules .module .panels .panel-set .layout-column.border > *:first-child {
+              border-top: none; }
+          .main-nav .modules .module .panels .panel-set .panel figure {
+            position: relative;
+            overflow: hidden;
+            width: 100%; }
+            .main-nav .modules .module .panels .panel-set .panel figure iframe, .main-nav .modules .module .panels .panel-set .panel figure img {
+              width: 100%;
+              display: block;
+              margin: 0 auto; }
+          .main-nav .modules .module .panels .panel-set .panel h3 {
+            font-size: 1.8em;
+            line-height: 1.2;
+            margin: 0 0 1rem; }
+          .main-nav .modules .module .panels .panel-set .panel p {
+            font-size: 0.9em; }
+
+.site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 4rem; }
+
+.disclaimer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4rem;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 2rem; }
+  .disclaimer > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; }
+    @media screen and (min-width: 51em) {
+      .disclaimer > .container {
+        flex-direction: row; } }
+    .disclaimer > .container .icon {
+      color: #ff0;
+      font-size: 3em;
+      display: block;
+      margin-bottom: 1.5rem; }
+      @media screen and (min-width: 51em) {
+        .disclaimer > .container .icon {
+          margin-bottom: 0;
+          margin-right: 2rem; } }
+    .disclaimer > .container p {
+      margin: 0;
+      flex: 1; }
+
+.fullpage-scroll-section {
+  position: relative; }
+  .fullpage-scroll-section.dark {
+    background: #272927;
+    color: #d2cfc3; }
+    .fullpage-scroll-section.dark h1, .fullpage-scroll-section.dark h2, .fullpage-scroll-section.dark h3, .fullpage-scroll-section.dark h4, .fullpage-scroll-section.dark h5, .fullpage-scroll-section.dark h6 {
+      color: #fff; }
+  .fullpage-scroll-section .scroll-indicator {
+    position: absolute;
+    display: block;
+    bottom: 1rem;
+    right: 1rem;
+    text-decoration: none;
+    outline: 0;
+    z-index: 3; }
+    .fullpage-scroll-section .scroll-indicator .label {
+      opacity: 0;
+      transition: opacity 400ms; }
+    .fullpage-scroll-section .scroll-indicator .icon {
+      text-align: center; }
+    .fullpage-scroll-section .scroll-indicator:focus .label, .fullpage-scroll-section .scroll-indicator:hover .label {
+      opacity: 1; }
+
+.main-nav form.search-form .input-group {
+  display: flex;
+  flex-direction: row; }
+  .main-nav form.search-form .input-group input {
+    flex-grow: 1;
+    height: 2.5rem;
+    margin: 0;
+    padding: 0.5rem;
+    border: 1px solid #999;
+    border-right: 0;
+    font-family: inherit;
+    font-size: inherit;
+    -moz-appearance: none;
+    -webkit-appearance: none; }
+    .main-nav form.search-form .input-group input:focus {
+      border-color: #a47140; }
+  .main-nav form.search-form .input-group button {
+    margin: 0;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    text-align: center;
+    background: #a47140;
+    border: 1px solid #a47140;
+    color: #eee8de;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    padding: 0 1rem; }
+    .main-nav form.search-form .input-group button > span {
+      font-size: 0.95em;
+      letter-spacing: 1px; }
+    .main-nav form.search-form .input-group button:focus, .main-nav form.search-form .input-group button:hover {
+      background: #b67e47; }
+    .main-nav form.search-form .input-group button::-moz-focus-inner {
+      border: 0; }
+    .main-nav form.search-form .input-group button:active {
+      background: #926439;
+      box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.3); }
+
+.about-project .container {
+  padding: 2rem 3rem; }
+.about-project .fp-controlArrow.fp-prev {
+  border-right-color: #acaaa3; }
+.about-project .fp-controlArrow.fp-next {
+  border-left-color: #acaaa3; }
+.about-project .advisors {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap; }
+  @media only screen and (min-width: 35em) {
+    .about-project .advisors {
+      flex-direction: row; } }
+  .about-project .advisors .member {
+    padding: 1em; }
+    @media only screen and (min-width: 35em) {
+      .about-project .advisors .member {
+        width: 50%; } }
+    @media only screen and (min-width: 51em) {
+      .about-project .advisors .member {
+        width: 33%; } }
+    @media only screen and (min-width: 70em) {
+      .about-project .advisors .member {
+        width: 25%; } }
+    .about-project .advisors .member .name {
+      color: #272927;
+      font-weight: bold;
+      display: block; }
+    .about-project .advisors .member .position {
+      font-size: 0.9em;
+      color: #acaaa3;
+      display: block; }
+
+.content-news {
+  font-size: 0.9em; }
+  .content-news .container {
+    display: flex;
+    flex-direction: column; }
+    @media only screen and (min-width: 51em) {
+      .content-news .container {
+        flex-direction: row; } }
+    .content-news .container aside {
+      padding: 2rem 3rem;
+      flex: 1;
+      border-bottom: 1px solid #353635; }
+      @media only screen and (min-width: 51em) {
+        .content-news .container aside {
+          border-bottom: 0;
+          border-right: 1px solid #353635; } }
+    .content-news .container .content {
+      padding: 2rem 3rem;
+      flex: 2;
+      display: flex;
+      flex-direction: column; }
+      .content-news .container .content h1, .content-news .container .content h2, .content-news .container .content h3, .content-news .container .content h4, .content-news .container .content h5, .content-news .container .content h6 {
+        line-height: 1.8;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        border-bottom: 2px dotted #353635; }
+      .content-news .container .content ol {
+        margin: 0 0 2em;
+        padding: 0;
+        list-style: none; }
+        .content-news .container .content ol li {
+          margin: 1rem 0;
+          padding: 0 0 1rem;
+          border-bottom: 1px solid #353635; }
+          .content-news .container .content ol li:last-child {
+            border-bottom: 0; }
+          .content-news .container .content ol li .title {
+            display: block;
+            text-decoration: none;
+            font-size: 1.3em; }

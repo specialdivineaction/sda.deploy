@@ -1,8 +1,8 @@
 # Playbook to setup sda
-# Playbook is built around Ubuntu 14.04
+# Playbook is built around Ubuntu 14.04 or CentOS 7.2
 # This playbook assumes you have already created the directory named in the project_directory variable and cloned the sda.deploy repo into it
 # The default value is /sda 
-# It also assumes that you have copied the catalog.war and SSL cert pieces to the same directory as the playbook
+# It also assumes that you have copied the sda.war and SSL cert pieces to the same directory as the playbook
 # It is recommended to reboot when this completes
 ---
 - hosts: localhost
@@ -12,7 +12,7 @@
     # this is the project directory in which the sda.deploy repo is checked out into
     project_directory: /sda 
     # this should be named according to the SDA WAR file. This will be used to copy the dex WAR file to the correct location for running
-    sda_war: catalog.war
+    sda_war: sda.war
     # this should be the email address of the server admin.  It will be used in the Apache configuration
     admin_email: admin@nowhere.com
     # The default password for the postgres user for Postgresql will be set to this value
@@ -41,14 +41,15 @@
     solr_public: false
     # set this to false to disable SSL - Note that this is *NOT* recommended
     ssl_enabled: true
+    # set this to the appropriate timezone code for your locale; change as needed. This is used for setting the timezone in the Docker containers
+    docker_timezone: America/Chicago
+    
 # probably don't need to edit below this line
 ##############################################################    
     # These are the paths for the docker container files - it is unlikely that you will need to change them
     container_directories:
     - /tomcat/solr/logs
     - /tomcat/solr/webapps
-    - /tomcat/hathi/logs
-    - /tomcat/hathi/webapps
     - /tomcat/sda/logs
     - /tomcat/sda/webapps
     # these next 2 have to do with Apache config - it is unlikely that you will need to change them
@@ -84,41 +85,105 @@
       - python-jinja2
       - python-setuptools
       # steps that apply to all Ubuntu hosts
-    - name: install git and other useful tools 
+    - name: install useful tools 
       apt: name="{{ item }}" state=present
       with_items:
         - htop
-        - git 
         - ncdu
+        - tmux
     tags: 
-      - common
-      - ubuntu
+    - common
+    - ubuntu
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    
+  # initial steps that apply to CentOS hosts  
+  - block:
+    - name: update yum cache
+      yum: name=* update_cache=yes state=present
+    - name: install useful tools
+      yum: name="{{ item }}" state=present
+      with_items:
+      - htop
+      - tmux
+      - ncdu
+      - policycoreutils-python
+      - libselinux-python
+    tags:
+    - common
+    - centos
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    
+        
+        
+    
   
 # install Postgresql 9.5
-  - block: 
-    - name: install apt key for postgresql repository but only if not already present
-      apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present
-      tags: postgresql
-    - name: Add Postgresql repository
-      apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' update_cache=yes state=present
-      tags: postgresql
-    - name: install postgresql, postgresql-contrib (additional functions), postgresql-plpython and (libpq-dev, python-psycopg2 - ansible dependencies for managing postgresql)
-      apt: pkg="{{ item }}" state=present
-      with_items:
-        - postgresql-9.5
-        - libpq-dev
-        - python-psycopg2
-        - postgresql-contrib-9.5
-        - postgresql-plpython-9.5
-      ignore_errors: yes
-      register: postgresql_installed
-    - name: update pg_hba.conf to allow pg_admin access from local subnet
-      template: src="{{ project_directory }}/serverconf/etc/postgresql/pg_hba.conf.j2" dest="/etc/postgresql/9.5/main/pg_hba.conf" mode=0640 owner=postgres group=postgres force=yes
-    - name: fix postgresql access permissions
-      lineinfile: dest=/etc/postgresql/9.5/main/postgresql.conf regexp="^\#(listen_addresses\s\=\s\')(.*)(\'.*)" line='\1*\3' backrefs=yes
-    - name: update firewall settings to allow pgadmin from our subnet
-      ufw: rule=allow proto=tcp from_ip="{{ local_subnet }}" to_port=5432  
+  - block:
+    # install on Ubuntu or Debian
+    - block: 
+      - name: install apt key for postgresql repository but only if not already present
+        apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc state=present
+        tags: postgresql
+      - name: Add Postgresql repository
+        apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main' update_cache=yes state=present
+        tags: postgresql
+      - name: install postgresql, postgresql-contrib (additional functions), postgresql-plpython and (libpq-dev, python-psycopg2 - ansible dependencies for managing postgresql)
+        apt: pkg="{{ item }}" state=present
+        with_items:
+          - postgresql-9.5
+          - libpq-dev
+          - python-psycopg2
+          - postgresql-contrib-9.5
+          - postgresql-plpython-9.5
+        ignore_errors: yes
+        register: postgresql_installed
+      - name: update pg_hba.conf to allow pg_admin access from local subnet
+        template: src="{{ project_directory }}/serverconf/etc/postgresql/pg_hba.conf.j2" dest="/etc/postgresql/9.5/main/pg_hba.conf" mode=0640 owner=postgres group=postgres force=yes
+      - name: fix postgresql access permissions
+        lineinfile: dest=/etc/postgresql/9.5/main/postgresql.conf regexp="^\#(listen_addresses\s\=\s\')(.*)(\'.*)" line='\1*\3' backrefs=yes
+      - name: update firewall settings to allow pgadmin from our subnet
+        ufw: rule=allow proto=tcp from_ip="{{ local_subnet }}" to_port=5432  
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+      
+      # install on CentOS or RHEL
+    - block:
+      - name: check if Postgresql is already installed or not - note that this will give an error if it is not installed, which is normal
+        shell: yum list installed postgresql95-server > /dev/null 2>&1
+        register: pginstall_check
+        ignore_errors: yes
+        changed_when: False
+
+      - block:
+        - name: install Posgresql repository for CentOS or RHEL
+          command: /bin/rpm -Uvh https://download.postgresql.org/pub/repos/yum/9.5/redhat/rhel-7-x86_64/pgdg-redhat95-9.5-3.noarch.rpm
+          ignore_errors: yes
+        - name: install Postgresql 9.5
+          yum: name="{{ item }}" state=present
+          with_items: 
+          - postgresql95-server
+          - postgresql95
+          - python-psycopg2
+          - postgresql95-contrib
+          - postgresql95-plpython
+          ignore_errors: yes
+          register: postgresql_installed
+        - name: Initialize PGDATA - note that this command takes a while to run
+          command: /usr/pgsql-9.5/bin/postgresql95-setup initdb
+        - name: Enable Postgresql to start at boot
+          service: name=postgresql-9.5 enabled=yes
+          # equivalent command is /bin/systemctl enable postgresql-9.5
+        - name: update pg_hba.conf to allow pg_admin access from local subnet
+          template: src="{{ project_directory }}/serverconf/etc/postgresql/pg_hba.conf.j2" dest="/var/lib/pgsql/9.5/data/pg_hba.conf" mode=0600 owner=postgres group=postgres force=yes
+        - name: fix postgresql access permissions
+          lineinfile: dest=/var/lib/pgsql/9.5/data/postgresql.conf regexp="^\#(listen_addresses\s\=\s\')(.*)(\'.*)" line='\1*\3' backrefs=yes
+        - name: Start Postgresql
+          service: name=postgresql-9.5 state=started
+          # equivalent command is /bin/systemctl start postgresql-9.5
+        - name: Add firewall exception for PgAdmin from local subnet
+          firewalld: source="{{ local_subnet }}" port=5432/tcp permanent=true immediate=yes state=enabled
+        when: pginstall_check is defined and pginstall_check.rc != 0
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' 
+          
     - name: set postgres password to supplied value
       become_user: postgres
       become: yes
@@ -127,7 +192,7 @@
     - name: Create the database
       postgresql_db: name="sda" login_user=postgres login_password="{{ pg_password }}" login_host=localhost owner="postgres" state=present
     - name: Restore db schema - really only useful on first run
-      command: "/usr/bin/psql -U postgres -d sda < {{ project_directory }}/releng/ansible/sda-schema.dump"
+      command: "psql -U postgres -d sda < {{ project_directory }}/releng/ansible/sda-schema.dump"
       become: yes
       become_user: postgres
       ignore_errors: yes  
@@ -135,86 +200,144 @@
     
 # install SSL Certificate files on a server
   - block:
-    - name: copy SSL certificate file
-      #get_url: url="{{ ssl_cert }}" dest="/etc/ssl/certs/" mode=0644
-      copy: remote_src=yes src="{{ ssl_cert }}" dest="/etc/ssl/certs/" mode=0644
-    - name: copy SSL intermediate chain file
-      #get_url: url="{{ ssl_intermediate }}" dest="/etc/ssl/certs/" mode=0644
-      copy: remote_src=yes src="{{ ssl_intermediate }}" dest="/etc/ssl/certs/" mode=0644
-    - name: copy SSL key file
-      #get_url: url="{{ ssl_key }}" dest="/etc/ssl/private/" mode=0640 group=ssl-cert
-      copy: remote_src=yes src="{{ ssl_key }}" dest="/etc/ssl/private/" mode=0640 group=ssl-cert 
+    # install on Ubuntu
+    - block:
+      - name: copy SSL certificate file
+        copy: remote_src=yes src="{{ ssl_cert }}" dest="/etc/ssl/certs/" mode=0644
+      - name: copy SSL intermediate chain file
+        copy: remote_src=yes src="{{ ssl_intermediate }}" dest="/etc/ssl/certs/" mode=0644
+      - name: copy SSL key file
+        copy: remote_src=yes src="{{ ssl_key }}" dest="/etc/ssl/private/" mode=0640 group=ssl-cert
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+    # install on CentOS or RHEL
+    - block:
+      - name: copy SSL certificate file
+        copy: remote_src=yes src="{{ ssl_cert }}" dest="/etc/pki/tls/certs/" mode=0644
+      - name: copy SSL intermediate chain file
+        copy: remote_src=yes src="{{ ssl_intermediate }}" dest="/etc/pki/tls/certs/" mode=0644
+      - name: copy SSL key file
+        copy: remote_src=yes src="{{ ssl_key }}" dest="/etc/pki/tls/private/" mode=0600 group=root
+      - name: fix SELinux context on copied SSL certificates
+        command: /sbin/restorecon -RvF /etc/pki
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'  
     when: ssl_enabled == true
     ignore_errors: yes
     tags: ssl_cert
     
 # Install Apache 2.4    
   - block:
-    - name: install apache2 - web server of choice
-      apt: pkg=apache2 state=present
-    - name: install mod_rewrite
-      apache2_module: name=rewrite state=present
-    - name: Change ServerTokens setting to Production for 14.04
-      lineinfile: dest=/etc/apache2/conf-available/security.conf regexp='^(ServerTokens\s)OS' line='\1Prod' backrefs=yes
-    - name: Change ServerSignature setting to Off for 14.04
-      lineinfile: dest=/etc/apache2/conf-available/security.conf regexp='^(ServerSignature\s)On' line='\1Off' backrefs=yes 
-    - name: install mod_proxy_html for Apache
-      apt: pkg=libapache2-mod-proxy-html state=present
-    - name: install SSL support
-      apache2_module: name=ssl state=present
-    - name: install proxy module
-      apache2_module: name=proxy state=present
-    - name: install ajp proxy handler
-      apache2_module: name=proxy_ajp state=present
-    - name: install http proxy handler
-      apache2_module: name=proxy_http state=present
-    - name: install html proxy handler
-      apache2_module: name=proxy_html state=present
-    - name: install headers module
-      apache2_module: name=headers state=present
-    - name: enable the ssl site in apache in 14.04
-      command: /usr/sbin/a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl.conf
-      when: ssl_enabled == true 
+    # install on Ubuntu
+    - block:
+      - name: install apache2 - web server of choice
+        apt: pkg=apache2 state=present
+      - name: install mod_rewrite
+        apache2_module: name=rewrite state=present
+      - name: Change ServerTokens setting to Production for 14.04
+        lineinfile: dest=/etc/apache2/conf-available/security.conf regexp='^(ServerTokens\s)OS' line='\1Prod' backrefs=yes
+      - name: Change ServerSignature setting to Off for 14.04
+        lineinfile: dest=/etc/apache2/conf-available/security.conf regexp='^(ServerSignature\s)On' line='\1Off' backrefs=yes 
+      #- name: install mod_proxy_html for Apache
+      #  apt: pkg=libapache2-mod-proxy-html state=present
+      - name: install SSL support
+        apache2_module: name=ssl state=present
+      - name: install proxy module
+        apache2_module: name=proxy state=present
+      - name: install ajp proxy handler
+        apache2_module: name=proxy_ajp state=present
+      - name: install http proxy handler
+        apache2_module: name=proxy_http state=present
+     # - name: install html proxy handler
+     #   apache2_module: name=proxy_html state=present
+      - name: install headers module
+        apache2_module: name=headers state=present
+      - name: enable the ssl site in apache in 14.04
+        command: /usr/sbin/a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl.conf
+        when: ssl_enabled == true 
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - block:
+      - name: install apache2 web server
+        yum: name="httpd" state=present
+      - name: install mod_ssl if SSL is enabled
+        yum: name=mod_ssl state=present
+        when: ssl_enabled == true
+      # note, CentOS already has all required modules enabled
+      - name: copy security config
+        copy: remote_src=yes src="{{ project_directory }}/serverconf/etc/httpd/conf.d/security.conf"  dest="/etc/httpd/conf.d/security.conf"  
+      - name: disable welcome page
+        copy: remote_src=yes src="{{ project_directory }}/serverconf/etc/httpd/conf.d/welcome.conf" dest="/etc/httpd/conf.d/welcome.conf" force=yes mode=0644
+      - name: enable http access in firewall
+        firewalld: service=http permanent=true state=enabled immediate=true
+      - name: enable https access in firewall
+        firewalld: service=https permanent=true state=enabled immediate=true
+        when: ssl_enabled == true
+      - name: Enable Apache to start at boot
+        service: name=httpd enabled=yes
+        # equivalent command is /bin/systemctl enable httpd
+      - name: Start Apache
+        service: name=httpd state=started
+        # equivalent command is /bin/systemctl start httpd
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'                
     tags: webserver
 
 # install Docker
   - block:
-    - name: set docker filename
-      set_fact: docker_filename="docker"
-    - name: Add Docker repository key
-      apt_key: url="https://apt.dockerproject.org/gpg"
-    - name: Add Docker repository for 14.04
-      apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-trusty main' update_cache=yes
-      when: ansible_distribution_release == "trusty"
-    - name: install docker
-      apt: pkg=docker-engine state=present
-      register: docker_installed
-    - name: enable UFW forwarding for docker
-      lineinfile: dest=/etc/default/ufw regexp='(DEFAULT_FORWARD_POLICY=\")(DROP)(\")' line='\1ACCEPT\3' backrefs=yes
-#    - name: reload ufw rules for docker
-#      ufw: state=reloaded
-#      ignore_errors: yes
-    - name: enable memory and swap accounting
-      lineinfile: dest=/etc/default/grub regexp='^(GRUB_CMDLINE_LINUX=\")(.*)(\")' line='\1cgroup_enable=memory swapaccount=1\3' backrefs=yes
-    - name: update grub
-      command: /usr/sbin/update-grub
-      when: docker_installed.changed
+  # install on Ubuntu
+    - block:
+      - name: set docker filename
+        set_fact: docker_filename="docker"
+      - name: Add Docker repository key
+        apt_key: url="https://apt.dockerproject.org/gpg"
+      - name: Add Docker repository for 14.04
+        apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-trusty main' update_cache=yes
+        when: ansible_distribution_release == "trusty"
+      - name: install docker
+        apt: pkg=docker-engine state=present
+        register: docker_installed
+      - name: enable UFW forwarding for docker
+        lineinfile: dest=/etc/default/ufw regexp='(DEFAULT_FORWARD_POLICY=\")(DROP)(\")' line='\1ACCEPT\3' backrefs=yes
+#      - name: reload ufw rules for docker
+#        ufw: state=reloaded
+#        ignore_errors: yes
+      - name: enable memory and swap accounting
+        lineinfile: dest=/etc/default/grub regexp='^(GRUB_CMDLINE_LINUX=\")(.*)(\")' line='\1cgroup_enable=memory swapaccount=1\3' backrefs=yes
+      - name: update grub
+        command: /usr/sbin/update-grub
+        when: docker_installed.changed
+      - name: check to see docker managed bridge is setup correctly
+        shell: "/bin/grep -q bip={{ docker_bridge_ip }} /etc/default/{{ docker_filename }} && echo 'True' || echo 'False'"
+        register: docker_bipset
+        changed_when: docker_bipset.stdout=='False'
+      - name: add docker managed bridge IP in /etc/default/{{ docker_filename }}
+        lineinfile: dest=/etc/default/{{ docker_filename }} insertafter=EOF line='DOCKER_OPTS="--bip={{ docker_bridge_ip }}"'
+        when: docker_bipset.stdout=='False'
+        ignore_errors: yes
+      - name: Add firewall exception for Postgresql access port to host from Docker
+        ufw: rule=allow direction=in interface=docker0 proto=tcp src="{{ docker_subnet }}" to_port=5432
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    # install on CentOS / RHEL
+    - block:
+      - name: copy docker yum repo config file
+        copy: remote_src=yes src="{{ project_directory }}/serverconf/etc/yum.repos.d/docker.repo"  dest="/etc/yum.repos.d/docker.repo"
+      - name: install Docker
+        yum: name=docker-engine state=present
+        register: docker_installed
+      - name: create directory for docker config
+        file: path=/etc/systemd/system/docker.service.d state=directory 
+      - name: install templated Docker config
+        template: src="{{ project_directory }}/serverconf/etc/systemd/system/docker.service.d/docker.conf.j2" dest="/etc/systemd/system/docker.service.d/docker.conf" mode=0644 force=yes
+      - name: enable Docker service to run at boot
+        service: name=docker enabled=yes
+      - name: start Docker daemon
+        service: name=docker state=started
+      - name: Add firewall exception for Postgresql access port to host from Docker
+        firewalld: source="{{ docker_subnet }}" port=5432/tcp permanent=true immediate=yes state=enabled
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
     - name: install dependency for ansible to manipulate docker
-      pip: name={{ item }}
+      pip: name=docker-py version=1.8.1
       ignore_errors: yes
-      with_items:
-      - docker-py
-      - requests
-    - name: check to see docker managed bridge is setup correctly
-      shell: "/bin/grep -q bip={{ docker_bridge_ip }} /etc/default/{{ docker_filename }} && echo 'True' || echo 'False'"
-      register: docker_bipset
-      changed_when: docker_bipset.stdout=='False'
-    - name: add docker managed bridge IP in /etc/default/{{ docker_filename }}
-      lineinfile: dest=/etc/default/{{ docker_filename }} insertafter=EOF line='DOCKER_OPTS="--bip={{ docker_bridge_ip }}"'
-      when: docker_bipset.stdout=='False'
-      ignore_errors: yes
-    - name: Add firewall exception for Postgresql access port to host from Docker
-      ufw: rule=allow direction=in interface=docker0 proto=tcp src="{{ docker_subnet }}" to_port=5432
+    - name: install second dependency for ansible to manipulate docker
+      pip: name=requests
     tags: docker 
   
 # setup configuration and directories for sda 
@@ -222,38 +345,56 @@
     - name: create directories for containers 
       file: path="{{ item }}" state=directory
       with_items: "{{ container_directories }}"
-   # if this file exists, then we are running this for the first time
-    - name: get stats on default config
-      stat: path=/etc/apache2/sites-available/000-default.conf
-      register: apache_default
-      ignore_errors: yes
-    - name: remove sites to prevent errors
-      file: dest="{{ item }}" state=absent
-      with_items:
-      - /etc/apache2/sites-available/000-default.conf
-      - /etc/apache2/sites-available/default-ssl.conf
-      when: apache_default is defined and apache_default.stat.isreg == True
-      ignore_errors: yes
-    - name: remove symlinks to prevent errors
-      file: dest="{{ item }}" state=absent
-      with_items:
-      - /etc/apache2/sites-enabled/000-default.conf
-      - /etc/apache2/sites-available/default-ssl.conf
-      when: apache_default is defined and apache_default.stat.isreg == True
-      ignore_errors: yes      
-    - name: install templated apache config
-      #file: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('no') }}" state=link
-      template: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('yes') }}"
-      with_dict: "{{ symlinks }}"
-      ignore_errors: yes
-    - name: enable sites in Apache
-      command: /usr/sbin/a2ensite {{ item.value.vhost }} creates={{ item.value.path }}
-      with_dict: "{{ config_setup_apachehosts | default({}) }}"
-      ignore_errors: yes
-    - name: remove SSL site if disabled
-      command: /usr/sbin/a2dissite default-ssl
-      ignore_errors: yes
-      when: ssl_enabled == false
+  # setup for Ubuntu
+    - block:
+      # if this file exists, then we are running this for the first time
+      - name: get stats on default config
+        stat: path=/etc/apache2/sites-available/000-default.conf
+        register: apache_default
+        ignore_errors: yes
+      - name: remove sites to prevent errors
+        file: dest="{{ item }}" state=absent
+        with_items:
+        - /etc/apache2/sites-available/000-default.conf
+        - /etc/apache2/sites-available/default-ssl.conf
+        when: apache_default is defined and apache_default.stat.isreg == True
+        ignore_errors: yes
+      - name: remove symlinks to prevent errors
+        file: dest="{{ item }}" state=absent
+        with_items:
+        - /etc/apache2/sites-enabled/000-default.conf
+        - /etc/apache2/sites-available/default-ssl.conf
+        when: apache_default is defined and apache_default.stat.isreg == True
+        ignore_errors: yes      
+      - name: install templated apache config
+        #file: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('no') }}" state=link
+        template: src="{{ item.value.src }}" dest="{{ item.value.dest }}" mode="{{ item.value.mode | default('0664') }}" force="{{ item.value.force | default('yes') }}"
+        with_dict: "{{ symlinks }}"
+        ignore_errors: yes
+      - name: enable sites in Apache
+        command: /usr/sbin/a2ensite {{ item.value.vhost }} creates={{ item.value.path }}
+        with_dict: "{{ config_setup_apachehosts | default({}) }}"
+        ignore_errors: yes
+      - name: remove SSL site if disabled
+        command: /usr/sbin/a2dissite default-ssl
+        ignore_errors: yes
+        when: ssl_enabled == false
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+      
+    # setup for CentOS / RHEL
+    - block:
+      - name: install templated config for http access
+        template: src="{{ project_directory }}/serverconf/etc/httpd/conf.d/sda.conf.j2" dest="/etc/httpd/conf.d/{{ host_name }}.{{ dns_suffix }}.conf" mode=0644 force=yes
+      - name: install templated config for https access
+        template: src="{{ project_directory }}/serverconf/etc/httpd/conf.d/ssl.conf.j2" dest="/etc/httpd/conf.d/ssl.conf" mode=0644 force=yes
+        when: ssl_enabled == true
+      - name: create SELinux context for splash site
+        command: /sbin/semanage fcontext -a -t httpd_sys_content_t "{{ project_directory }}/web(/.*)?"
+        ignore_errors: yes
+      - name: apply SELinux context for splash site
+        command: /sbin/restorecon -Rv "{{ project_directory }}/web"
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+      
     tags: config_setup 
 
 # copy sda WAR to correct location
@@ -265,36 +406,48 @@
 
 # restart services
   - block:
-    - name: restart Apache
-      service: name=apache2 state=restarted
-    - name: restart Postgresql
-      service: name=postgresql state=restarted
-    - name: stop docker
-      service: name=docker state=stopped
-    - name: delete old docker bridge
-      command: ip link del docker0
-    - name: start docker
-      service: name=docker state=started
-      ignore_errors: yes
+    # restart services under Ubuntu
+    - block:
+      - name: restart Apache
+        service: name=apache2 state=restarted
+      - name: restart Postgresql
+        service: name=postgresql state=restarted
+      - name: stop docker
+        service: name=docker state=stopped
+      - name: delete old docker bridge
+        command: ip link del docker0
+      - name: start docker
+        service: name=docker state=started
+        ignore_errors: yes
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    # restart services under CentOS / RHEL  
+    - block:
+      - name: force systemd to read config from disk again
+        command: /bin/systemctl daemon-reload
+      - name: restart Apache  
+        service: name=httpd state=restarted
+      - name: restart Postgresql
+        service: name=postgresql-9.5 state=restarted
+      - name: restart Docker
+        service: name=docker state=restarted
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
     tags: restart_service   
     
 # pull docker images and start containers
   - block:
     - block:
-      - name: build docker sda tomcat image
-        docker_image: path="{{ project_directory }}/releng/docker/tomcat7" name="sda/tomcat7" state=present
+      - name: build docker sda tomcat image - this takes a long time - possibly more than 10 minutes in some cases
+        docker_image: path="{{ project_directory }}/releng/docker/tomcat7" name="sda-tomcat7" state=present pull=false  
       - name: start sda container
         docker_container:
           name: sda
-          image: sda/tomcat7
+          image: sda-tomcat7
           state: started
           published_ports:
           - "127.0.0.1:8080:8080"
           - "127.0.0.1:8009:8009"
           restart_policy: always
           volumes:
-          - "/etc/localtime:/etc/localtime:ro"
-          - "/etc/timezone:/etc/timezone:ro"
           - "/tomcat/sda/webapps:/usr/local/tomcat/webapps:rw"
           - "/tomcat/sda/logs:/usr/local/tomcat/logs:rw"
           - "{{ project_directory }}:/war-deployment/sda.deploy:rw"
@@ -303,14 +456,15 @@
             tomcat_xmx: 768m
             tomcat_xms: 256m
             tomcat_maxpermsize: 256m
+            container_timezone: "{{ docker_timezone }}"
       tags: sda_container
     - block: 
       - name: build docker sda solr image
-        docker_image: path="{{ project_directory }}/releng/docker/solr" name="sda/solr" state=present       
+        docker_image: path="{{ project_directory }}/releng/docker/solr" name="sda-solr" state=present pull=false       
       - name: start solr container
         docker_container:
           name: solr
-          image: sda/solr
+          image: sda-solr
           state: started
           published_ports:
           - "127.0.0.1:8983:8983"
@@ -318,13 +472,10 @@
           volumes:
           - "{{ project_directory }}/solr/articles:/opt/solr/server/solr/articles:rw"
           - "{{ project_directory }}/solr/authors:/opt/solr/server/solr/authors:rw"
-          - "{{ project_directory }}/solr/pages:/opt/solr/server/solr/pages:rw"
           - "{{ project_directory }}/solr/relationships:/opt/solr/server/solr/relationships:rw"
-          - "{{ project_directory }}/solr/volumes:/opt/solr/server/solr/volumes:rw"
           - "{{ project_directory }}/solr/works:/opt/solr/server/solr/works:rw"
-          - "{{ project_directory }}/solr/HathiFiles:/opt/solr/server/solr/HathiFiles:rw"
           memory: 512MB
-        tags: solr_container
+      tags: solr_container
 #      - block:
 #        - name: start hathi solr container
 #          docker_container:
@@ -339,3 +490,10 @@
 #            memory: 512MB
 #          tags: hathi_container
     tags: launch_containers  
+    
+    
+# Todo:
+#* Add firewall management for firewalld - apparently it's on by default - need this for Docker, Postgresql 
+#* Convert Apache config to work
+#* Integrate Solr changes from Jesse
+#* 

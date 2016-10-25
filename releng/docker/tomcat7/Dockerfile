@@ -23,7 +23,7 @@ ENV REFRESHED_AT=2016-02-11 \
     HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
     JAVA_HOME=/usr/lib/jvm/java-8-oracle \
-    PATH=/sbin:/usr/sbin:/usr/bin:/bin \
+    PATH=/sbin:/usr/sbin:/usr/bin:/bin:/usr/local/bin \
     tomcat_log_dir=/usr/local/tomcat/logs \
     tomcat_webapp_dir=/usr/local/tomcat/webapps \
     TOMCAT_USER=tomcat7 \
@@ -40,14 +40,15 @@ RUN /usr/sbin/groupadd -r $TOMCAT_USER; \
     sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list; \
     /usr/sbin/locale-gen en_US.UTF-8; \
     apt-get -y update; \
-    apt-get install --no-install-recommends -y -q git curl unzip python python-six python-yaml python-jinja2 python-apt python-pycurl python-setuptools python-software-properties software-properties-common; \
+    apt-get install --no-install-recommends -y -q git curl unzip python python-six python-yaml python-jinja2 python-apt python-pycurl python-setuptools python-software-properties software-properties-common python-pip python-crypto python-cffi python-paramiko; \
     add-apt-repository ppa:pharmgkb/trusty; \
     apt-get -y update; \
     apt-get install --no-install-recommends -y -q libtcnative-1; \
-    cd /usr/local/bin/; \
-    git clone git://github.com/ansible/ansible.git --recursive; \
-    cd /usr/local/bin/ansible; \
-    git checkout e560bfeaca914c5fedf2a912f6f6fb852c534306; \
+    pip install ansible==2.1; \
+#    cd /usr/local/bin/; \
+#    git clone git://github.com/ansible/ansible.git --recursive; \
+#    cd /usr/local/bin/ansible; \
+#    git checkout e560bfeaca914c5fedf2a912f6f6fb852c534306; \
     #apt-add-repository ppa:ansible/ansible -y; \
     #apt-get -y update; \
     #apt-get install -y -q ansible; \
@@ -58,8 +59,8 @@ RUN /usr/sbin/groupadd -r $TOMCAT_USER; \
     rm /usr/local/bin/gosu.asc; \
     chmod +x /usr/local/bin/gosu; \
     #source /usr/local/bin/ansible/hacking/env-setup; \
-    . /usr/local/bin/ansible/hacking/env-setup; \
-    /usr/local/bin/ansible/bin/ansible-playbook /tmp/install_tomcat_docker.yml -c local; \
+#    . /usr/local/bin/ansible/hacking/env-setup; \
+    /usr/local/bin/ansible-playbook /tmp/install_tomcat_docker.yml -c local; \
     apt-get clean
 
 ADD foreground.sh /usr/local/tomcat/bin/foreground.sh

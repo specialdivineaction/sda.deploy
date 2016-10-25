@@ -20,6 +20,7 @@
         - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
         - { var: "tomcat_user", val: "{{ ansible_env.TOMCAT_USER | default('tomcat7') }}" }
         - { var: "tomcat_app_deployment_dir", val: "{{ ansible_env.tomcat_app_deployment_dir | default('/war-deployment/dashboard') }}" }
+        - { var: "container_timezone", val: "{{ ansible_env.container_timezone | default('America/Chicago')}}"}
     when: tomcat_7or8 == 7
   - block: 
     - name: override values for tomcat variables
@@ -34,6 +35,7 @@
         - { var: "tomcat_webapp_dir", val: "{{ ansible_env.tomcat_webapp_dir | default('/usr/local/tomcat/webapps') }}" }
         - { var: "tomcat_user", val: "{{ ansible_env.TOMCAT_USER | default('tomcat8') }}" }
         - { var: "tomcat_app_deployment_dir", val: "{{ ansible_env.tomcat_app_deployment_dir | default('/war-deployment/dashboard') }}" }
+        - { var: "container_timezone", val: "{{ ansible_env.container_timezone | default('America/Chicago')}}"}
     when: tomcat_7or8 == 8
 #  - name: set permissions on files
 #    file: path={{ item }} owner=tomcat7 group=tomcat7 state=directory recurse=yes
@@ -58,6 +60,10 @@
     - webapps
     - work
 # Note, when passing paths, delimit with |. If there is only one path, you don't need the |    
+  - name: set timezone variable
+    copy: content="{{ container_timezone }}" dest="/etc/timezone" force=yes
+  - name: enable new timezone value
+    command: /usr/sbin/dpkg-reconfigure -f noninteractive tzdata
   - name: set permissions on additional folders
     file: path="{{ item }}" state=directory recurse=yes group="{{ tomcat_user }}" owner="{{ tomcat_user }}"
     with_items: "{{ tomcat_directories.split('|') }}"

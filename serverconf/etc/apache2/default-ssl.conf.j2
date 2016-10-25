@@ -159,6 +159,7 @@ SSLSessionCacheTimeout  300
         #Require valid-user
         Require all granted
     </Directory>
+   RewriteRule  ^/catalog/admin$    /catalog/admin/ [R,L]
     
     # Splash site #
     Alias / {{ project_directory }}/web/splash-site/

@@ -1,4 +1,4 @@
-FROM solr:5.5
+FROM solr:6.2
 
 # Container to run solr while allowing the ability to take ownership of data files mapped in as volumes
 

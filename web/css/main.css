@@ -8068,6 +8068,14 @@ dl.metadata dd {
   margin: 0;
   padding: 0; }
 
+.csl-bib-body .csl-entry {
+  text-indent: -1rem;
+  padding-left: 1rem;
+  margin: 1rem 0; }
+
+.text-center {
+  text-align: center; }
+
 .site-header {
   background-color: #1a1b1a;
   height: 4rem;

@@ -41,7 +41,6 @@
             (int, float, boolean, string...)
      -->
 
-
    <!-- Valid attributes for fields:
      name: mandatory - the name for the field
      type: mandatory - the name of a field type from the 
@@ -78,45 +77,34 @@
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
 
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-   <field name="proxy" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
-   <field name="syntheticName" type="text_general" indexed="true" stored="true" required="true" multiValued="false" />
-   <field name="familyName" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />
-   <field name="displayName" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />
-   <field name="summary" type="text_general" indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="id"         type="string" indexed="true" stored="true" required="true"  multiValued="false" /> 
+   <field name="entryRef"   type="string" indexed="true" stored="true" required="false" multiValued="false"/>
+   
+   <field name="summary"    type="text_general" indexed="true" stored="true"  required="false" multiValued="false" />
 
-   <field name="birthLocation" type="text_general" indexed="true" stored="true"  required="false" multiValued="false" />
-   <field name="birthDate" type="date" indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="familyName" type="text_simple" indexed="true" stored="false" required="false" multiValued="false" />
+   <field name="givenName"  type="text_simple" indexed="true" stored="false" required="false" multiValued="false" />
+   <field name="altNames"   type="text_simple" indexed="true" stored="false" required="false" multiValued="true" />
 
-   <field name="deathLocation" type="text_general" indexed="true" stored="true"  required="false" multiValued="false" />
-   <field name="deathDate" type="date" indexed="true" stored="true"  required="false" multiValued="false" />
-   <field name="entryRef" type="text_general" indexed="true" stored="true" required="false" multiValued="false"/>
+   <field name="birthLocation" type="text_simple" indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="birthDate"     type="date"        indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="deathLocation" type="text_simple" indexed="true" stored="true"  required="false" multiValued="false" />
+   <field name="deathDate"     type="date"        indexed="true" stored="true"  required="false" multiValued="false" />
 
+   <field name="proxy"         type="string"      indexed="false" stored="true" required="false" multiValued="false"/>
+   
    <uniqueKey>id</uniqueKey>
  
    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
 
-    <!-- boolean type: "true" or "false" -->
+    <!-- boolean type: "true" or "false"
+         Note that numeric values can be optimized to support range queries by suppling a value for precisionStep. 
    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
-   <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
-
-    <!--
-     Numeric field types that index each value at various levels of precision
-     to accelerate range queries when the number of values between the range
-     endpoints is large. See the javadoc for NumericRangeQuery for internal
-     implementation details.
-
-     Smaller precisionStep values (specified in bits) will lead to more tokens
-     indexed per value, slightly larger index size, and faster range queries.
-     A precisionStep of 0 disables indexing at different precision levels.
-    -->
-    <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
-    <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+      -->
+   <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
          is a more restricted form of the canonical representation of dateTime
@@ -137,75 +125,44 @@
                       the current day
                       
          Consult the DateField javadocs for more information.
-
-         Note: For faster range queries, consider the tdate type
       -->
     <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
 
-    <!-- A Trie based date field for faster date range queries and date faceting. -->
-    <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
-
-
-    <!--Binary data type. The data should be sent/retrieved in as Base64 encoded Strings -->
-    <fieldtype name="binary" class="solr.BinaryField"/>
-
     <fieldType name="random" class="solr.RandomSortField" indexed="true" />
 
+    <!-- Used for large-form text blocks. -->
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
+        <charFilter class="solr.HTMLStripCharFilterFactory" />
         <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <!-- in this example, we will only use synonyms at query time
-        <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
-        -->
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
         <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.EnglishPossessiveFilterFactory"/>
+        <filter class="solr.KStemFilterFactory"/>
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
         <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.EnglishPossessiveFilterFactory"/>
+        <filter class="solr.KStemFilterFactory"/>
+      </analyzer>
+    </fieldType>
+    
+    <fieldType name="text_simple" class="solr.TextField" positionIncrementGap="100">
+      <analyzer type="index">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ReversedWildcardFilterFactory" withOriginal="true"
+           maxPosAsterisk="3" maxPosQuestion="2" maxFractionAsterisk="0.33"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.ReversedWildcardFilterFactory" withOriginal="true"
+           maxPosAsterisk="3" maxPosQuestion="2" maxFractionAsterisk="0.33"/>
       </analyzer>
     </fieldType>
 
-    <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
-      <analyzer type="index">
-        <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory"
-                ignoreCase="true"
-                words="lang/stopwords_en.txt"
-                />
-        <filter class="solr.LowerCaseFilterFactory"/>
-       <filter class="solr.EnglishPossessiveFilterFactory"/>
-        <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
-        <filter class="solr.PorterStemFilterFactory"/>
-      </analyzer>
-      <analyzer type="query">
-        <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-        <filter class="solr.StopFilterFactory"
-                ignoreCase="true"
-                words="lang/stopwords_en.txt"
-                />
-        <filter class="solr.LowerCaseFilterFactory"/>
-       <filter class="solr.EnglishPossessiveFilterFactory"/>
-        <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
-        <filter class="solr.PorterStemFilterFactory"/>
-      </analyzer>
-    </fieldType>
-   
-    <!-- This point type indexes the coordinates as separate fields (subFields)
-      If subFieldType is defined, it references a type, and a dynamic field
-      definition is created matching *___<typename>.  Alternately, if 
-      subFieldSuffix is defined, that is used to create the subFields.
-      Example: if subFieldType="double", then the coordinates would be
-        indexed in fields myloc_0___double,myloc_1___double.
-      Example: if subFieldSuffix="_d" then the coordinates would be indexed
-        in fields myloc_0_d,myloc_1_d
-      The subFields are an implementation detail of the fieldType, and end
-      users normally should not need to know about them.
-     -->
-    <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
-    <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
-    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
 </schema>

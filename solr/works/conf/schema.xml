@@ -80,32 +80,23 @@
    <field name="_root_" type="string" indexed="true" stored="false"/>
  
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-               
+   <!-- workInfo is a jsonified version of the data that will be passed back to the frontend for searching. -->
+   <field name="proxy" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
    <field name="authorIds" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />  
    <field name="authorNames" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />  
-   <field name="authorRole" type="text_general" indexed="false" stored="true" required="false" multiValued="true" />  
-   <field name="titleTypes" type="text_general" indexed="false" stored="true" required="false" multiValued="true" />  
-   <field name="lang" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />  
-   <field name="titles" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />  
-   <field name="subtitles" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />  
+   <field name="titles" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />   
    <field name="publisher" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />  
-   <field name="publisherLocation" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />  
-   <field name="publishDateString" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />  
-   <field name="publishDateValue" type="date" indexed="true" stored="true" required="false" multiValued="false" />  
-   <field name="series" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />  
+   <field name="publisherLocation" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />   
+   <field name="publishDateValue" type="date" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="summary" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />  
    
    <field name="editionId" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="editionName" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
    
    <field name="volumeId" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
-   <field name="volumeNumber" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="hasImages" type="text_general" indexed="true" stored="true" required="false" multiValued="false"/>
-   <field name="volumeTags" type="text_general" indexed="true" stored="true" required="false" multiValued="true"/>
-   <field name="volumeNotes" type="text_general" indexed="true" stored="true" required="false" multiValued="true"/>
-   
-   <!-- workInfo is a jsonified version of the data that will be passed back to the frontend for searching. -->
-   <field name="workInfo" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
+   <field name="volumeNumber" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="entryRef" type="text_general" indexed="true" stored="true" required="false" multiValued="false"/>
+
 
    <uniqueKey>id</uniqueKey>
 

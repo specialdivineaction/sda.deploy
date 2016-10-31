@@ -79,7 +79,7 @@
    <field name="_root_" type="string" indexed="true" stored="false"/>
 
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-   
+   <field name="proxy" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
    <field name="syntheticName" type="text_general" indexed="true" stored="true" required="true" multiValued="false" />
    <field name="familyName" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />
    <field name="displayName" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />
@@ -90,14 +90,9 @@
 
    <field name="deathLocation" type="text_general" indexed="true" stored="true"  required="false" multiValued="false" />
    <field name="deathDate" type="date" indexed="true" stored="true"  required="false" multiValued="false" />
-   
-   <field name="testfield" type="string" indexed="false" stored="true"  required="false" multiValued="false" />
-      
-   <!-- personInfo is a jsonified version of the data that will be passed back to the frontend for searching. -->
-   <field name="personInfo" type="string" indexed="false" stored="true" required="false" multiValued="false"/>
+   <field name="entryRef" type="text_general" indexed="true" stored="true" required="false" multiValued="false"/>
 
    <uniqueKey>id</uniqueKey>
-
  
    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
 

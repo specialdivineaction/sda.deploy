@@ -79,22 +79,14 @@
    <field name="_version_" type="long" indexed="true" stored="true"/>
    <field name="_root_" type="string" indexed="true" stored="false"/>
   
-   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" /> 
-               
-   <field name="description" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />                 
-   <field name="descriptionMimeType" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />                
+   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />                           
+   <field name="proxy" type="string" indexed="false" stored="true" required="false" multiValued="false" />
+   <field name="description" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />              
    <field name="relationshipType" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />                
    <field name="relatedEntities" type="text_general" indexed="true" stored="true" required="false" multiValued="true" />                
    <field name="targetEntities" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
-              
-   <field name="provCreator" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="provCreateDate" type="date" indexed="true" stored="true" required="false" multiValued="false" />  
-   <field name="provModifiedDate" type="date" indexed="true" stored="true" required="false" multiValued="false" />  
-               
-   <field name="relationshipModel" type="string" indexed="false" stored="true" required="false" multiValued="false" />  
-
-   <uniqueKey>id</uniqueKey>
-
+   <field name="entryRef" type="text_general" indexed="true" stored="true" required="false" multiValued="false"/>
+   
    <fieldType name="string" class="solr.StrField" sortMissingLast="true" />
 
    <!-- boolean type: "true" or "false" -->

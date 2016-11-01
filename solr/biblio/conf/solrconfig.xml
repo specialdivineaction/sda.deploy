@@ -400,7 +400,7 @@
     <lst name="defaults">
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
-      <!-- <str name="df">text</str> -->
+      <str name="qf">authorNames^10 titles^5 summary</str>
     </lst>
   </requestHandler>
 

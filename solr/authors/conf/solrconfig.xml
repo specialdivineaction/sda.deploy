@@ -400,7 +400,9 @@
     <lst name="defaults">
       <str name="echoParams">explicit</str>
       <int name="rows">10</int>
-      <!-- <str name="df">text</str> -->
+      <str name="qf">family^25 name^15 
+                     altName^10 summary^2 
+                     birthLocation deathLocation</str>
     </lst>
   </requestHandler>
 

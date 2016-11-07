@@ -27,7 +27,7 @@ Basic steps to run ansible playbook
 * `cd releng`
 * `cd ansible`
 * Edit variables in setup_sda.yml as needed
-* Also edit config in /sda/catalog_war/config.properties - especially URL and postgresql connection information
+* Also edit config in /sda/war_config/config.properties - especially URL and postgresql connection information
 * Copy sda.war to this folder
 * Copy SSL certificate, key and intermediate cert to this directory 
 * `ansible-playbook setup_sda.yml -c local`

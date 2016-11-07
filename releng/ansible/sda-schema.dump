@@ -2,9 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.3.10
--- Dumped by pg_dump version 9.3.10
--- Started on 2016-02-11 14:02:43 CST
+-- Dumped from database version 9.3.14
+-- Dumped by pg_dump version 9.5.0
+
+-- Started on 2016-11-07 11:58:25
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,9 +13,10 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
--- TOC entry 175 (class 3079 OID 11787)
+-- TOC entry 182 (class 3079 OID 11787)
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -22,8 +24,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2008 (class 0 OID 0)
--- Dependencies: 175
+-- TOC entry 2056 (class 0 OID 0)
+-- Dependencies: 182
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
@@ -37,8 +39,72 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- TOC entry 179 (class 1259 OID 24830)
+-- Name: articles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE articles (
+    id character varying(255) NOT NULL,
+    data json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE articles OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 16539)
+-- Name: authors; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE authors (
+    id character varying(255) NOT NULL,
+    author json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE authors OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 24863)
+-- Name: bibrefs; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE bibrefs (
+    id character varying(255) NOT NULL,
+    data json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE bibrefs OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 24819)
+-- Name: categorizations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE categorizations (
+    id character varying(255) NOT NULL,
+    doc json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE categorizations OWNER TO postgres;
+
+--
 -- TOC entry 174 (class 1259 OID 16497)
--- Name: copy_references; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: copy_references; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE copy_references (
@@ -51,11 +117,11 @@ CREATE TABLE copy_references (
 );
 
 
-ALTER TABLE public.copy_references OWNER TO postgres;
+ALTER TABLE copy_references OWNER TO postgres;
 
 --
 -- TOC entry 172 (class 1259 OID 16439)
--- Name: id_table; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: id_table; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE id_table (
@@ -64,61 +130,140 @@ CREATE TABLE id_table (
 );
 
 
-ALTER TABLE public.id_table OWNER TO postgres;
+ALTER TABLE id_table OWNER TO postgres;
 
 --
 -- TOC entry 170 (class 1259 OID 16387)
--- Name: people; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: people; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE people (
     id character varying(255) NOT NULL,
     historical_figure json,
-    active boolean DEFAULT true NOT NULL,
-    state character varying(32) DEFAULT 'ACTIVE'::character varying NOT NULL,
-    created timestamp without time zone DEFAULT now(),
-    modified timestamp without time zone
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone,
+    removed timestamp without time zone
 );
 
 
-ALTER TABLE public.people OWNER TO postgres;
+ALTER TABLE people OWNER TO postgres;
 
 --
 -- TOC entry 173 (class 1259 OID 16470)
--- Name: relationships; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: relationships; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE relationships (
     id character varying NOT NULL,
     relationship json,
-    active boolean DEFAULT true,
-    created timestamp without time zone DEFAULT now(),
-    modified timestamp without time zone
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone,
+    removed timestamp without time zone
 );
 
 
-ALTER TABLE public.relationships OWNER TO postgres;
+ALTER TABLE relationships OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 24881)
+-- Name: see_also; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE see_also (
+    source character varying(255) NOT NULL,
+    target character varying(255) NOT NULL
+);
+
+
+ALTER TABLE see_also OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 24792)
+-- Name: task_relns; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE task_relns (
+    id character varying(255) NOT NULL,
+    item json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE task_relns OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 16548)
+-- Name: task_work_items; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE task_work_items (
+    id character varying(255) NOT NULL,
+    item json,
+    removed timestamp without time zone,
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone
+);
+
+
+ALTER TABLE task_work_items OWNER TO postgres;
 
 --
 -- TOC entry 171 (class 1259 OID 16399)
--- Name: works; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: works; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE works (
     id character varying(255) NOT NULL,
     work json,
-    active boolean DEFAULT true NOT NULL,
-    state character varying(32) DEFAULT 'ACTIVE'::character varying NOT NULL,
-    created timestamp without time zone DEFAULT now(),
-    modified timestamp without time zone
+    date_created timestamp without time zone DEFAULT now() NOT NULL,
+    last_modified timestamp without time zone,
+    removed timestamp without time zone
 );
 
 
-ALTER TABLE public.works OWNER TO postgres;
+ALTER TABLE works OWNER TO postgres;
 
 --
--- TOC entry 1889 (class 2606 OID 16443)
--- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1939 (class 2606 OID 24838)
+-- Name: articles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY articles
+    ADD CONSTRAINT articles_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1931 (class 2606 OID 16547)
+-- Name: authors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY authors
+    ADD CONSTRAINT authors_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1941 (class 2606 OID 24871)
+-- Name: bibrefs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY bibrefs
+    ADD CONSTRAINT bibrefs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1937 (class 2606 OID 24827)
+-- Name: categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY categorizations
+    ADD CONSTRAINT categorizations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1925 (class 2606 OID 16443)
+-- Name: people_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY people
@@ -126,8 +271,8 @@ ALTER TABLE ONLY people
 
 
 --
--- TOC entry 1893 (class 2606 OID 16479)
--- Name: relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1929 (class 2606 OID 16479)
+-- Name: relationships_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY relationships
@@ -135,8 +280,26 @@ ALTER TABLE ONLY relationships
 
 
 --
--- TOC entry 1891 (class 2606 OID 16453)
--- Name: works_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1935 (class 2606 OID 24800)
+-- Name: task_relns_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY task_relns
+    ADD CONSTRAINT task_relns_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1933 (class 2606 OID 16556)
+-- Name: task_work_items_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY task_work_items
+    ADD CONSTRAINT task_work_items_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1927 (class 2606 OID 16453)
+-- Name: works_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY works
@@ -144,7 +307,7 @@ ALTER TABLE ONLY works
 
 
 --
--- TOC entry 2007 (class 0 OID 0)
+-- TOC entry 2055 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -155,7 +318,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-02-11 14:02:52 CST
+-- Completed on 2016-11-07 11:58:26
 
 --
 -- PostgreSQL database dump complete

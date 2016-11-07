@@ -11,7 +11,7 @@ Basic steps to run ansible playbook
 * If running Ubuntu, do these steps:
   * `sudo su`
   * `aptitude update`
-  * `aptitude install git software-properties-common python-six python-software-properties python-apt python-pycurl python-jinja2 python-yaml python-setuptools python-pip`
+  * `aptitude install git software-properties-common python-six python-software-properties python-apt python-pycurl python-jinja2 python-yaml python-setuptools python-pip python-dev`
 * If running CentOS/RHEL, do these steps:
   * `sudo su`
   * `yum install -y epel-release`
@@ -28,6 +28,9 @@ Basic steps to run ansible playbook
 * `cd ansible`
 * Edit variables in setup_sda.yml as needed
 * Also edit config in /sda/war_config/config.properties - especially URL and postgresql connection information
+* Keep in mind that all connection information / URL's are from the perspective of inside the Docker container.
+* Be sure to edit the opennlp.models.sentence.path property to reflect the desired language model. It should point at the full path of the file. It defaults to the supplied model.
+* Here is how to create a 256bit key for REST endpoint
 * Copy sda.war to this folder
 * Copy SSL certificate, key and intermediate cert to this directory 
 * `ansible-playbook setup_sda.yml -c local`

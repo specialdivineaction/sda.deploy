@@ -4,6 +4,11 @@
 # The default value is /sda 
 # It also assumes that you have copied the sda.war and SSL cert pieces to the same directory as the playbook
 # It is recommended to reboot when this completes
+# This playbook assumes you have 4GB of RAM. If you have a different amount, you may need to adjust the following variables at the end for the Docker container hosting the sda.war
+# memory: 2048MB
+# tomcat_xmx: 2048m
+# tomcat_xms: 512m
+
 ---
 - hosts: localhost
   vars:
@@ -450,10 +455,10 @@
           - "/tomcat/sda/webapps:/usr/local/tomcat/webapps:rw"
           - "/tomcat/sda/logs:/usr/local/tomcat/logs:rw"
           - "{{ project_directory }}:/war-deployment/sda.deploy:rw"
-          memory: 768MB
+          memory: 2048MB
           env:
-            tomcat_xmx: 768m
-            tomcat_xms: 256m
+            tomcat_xmx: 2048m
+            tomcat_xms: 512m
             tomcat_maxpermsize: 256m
             container_timezone: "{{ docker_timezone }}"
       tags: sda_container

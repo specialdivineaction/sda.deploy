@@ -11,7 +11,7 @@ Basic steps to run ansible playbook
 * If running Ubuntu, do these steps:
   * `sudo su`
   * `aptitude update`
-  * `aptitude install git software-properties-common python-six python-software-properties python-apt python-pycurl python-jinja2 python-yaml python-setuptools python-pip python-dev`
+  * `aptitude install git software-properties-common python-six python-software-properties python-apt python-pycurl python-jinja2 python-yaml python-setuptools python-pip python-dev libffi-dev libssl-dev`
 * If running CentOS/RHEL, do these steps:
   * `sudo su`
   * `yum install -y epel-release`

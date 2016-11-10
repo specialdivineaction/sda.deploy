@@ -20,7 +20,7 @@ Basic steps to run ansible playbook
   * `pip install paramiko httplib2 six`
 * The remaining steps are the same whether running Ubuntu or RHEL/CentOS
 * `pip install ansible==2.1`  
-* Verify the installation by running `ansible --version`. You should see output indicating that Ansible is at version 2.1.0.0
+* Verify the installation by running `ansible --version`. You should see output indicating that Ansible is at version 2.1.0.0. If you get errors on running this, run `pip install ansible==2.1 --upgrade`
 * `mkdir /sda`
 * `cd /sda`
 * `git clone https://github.com/tcat-tamu/sda.deploy .`
@@ -30,7 +30,7 @@ Basic steps to run ansible playbook
 * Also edit config in /sda/war_config/config.properties - especially URL and postgresql connection information
 * Keep in mind that all connection information / URL's are from the perspective of inside the Docker container.
 * Be sure to edit the opennlp.models.sentence.path property to reflect the desired language model. It should point at the full path of the file. It defaults to the supplied model.
-* Here is how to create a 256bit key for REST endpoint
+* Create 2 different 256 bit tokens with the command `openssl rand -base64 32` and insert in the appropriate place
 * Copy sda.war to this folder
 * Copy SSL certificate, key and intermediate cert to this directory 
 * `ansible-playbook setup_sda.yml -c local`

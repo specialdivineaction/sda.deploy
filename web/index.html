@@ -5,12 +5,13 @@
 <title>Special Divine Action</title>
 <meta content="" name="description">
 <meta content="width=device-width" name="viewport">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="/css/material-icons/material-icons.css">
 <link rel="stylesheet" href="/css/main.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.9/jquery.fullPage.min.css">
   <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
   <header class="site-header">
@@ -23,7 +24,7 @@
     </button>
 
     <div class="site-logo">
-      <a href="/"><img src="/assets/images/sda-logo-light-dev.png" alt="SDA Logo"></a>
+      <a href="/"><img src="/assets/images/sda-logo-light.png" alt="SDA Logo"></a>
     </div>
 
     <!-- TODO highlight current page: li.active
@@ -36,27 +37,11 @@
       
         <li><a href="/media">Media</a></li>
       
-        <li><a href="/teaching">Teaching</a></li>
-      
         <li><a href="/about">About</a></li>
       
     </ul>
 
     <div class="horizontal-glue"></div>
-
-    <div class="search">
-      <a href="" class="toggle" ng-class="{active: vm.isSearchFormVisible}" ng-click="vm.toggleSearchForm()"><i class="fa fa-search"></i></a>
-      <form ng-class="{active: vm.isSearchFormVisible}">
-        <label class="sr-only" for="search">Search</label>
-        <div class="search-input-group">
-          <input id="search" name="q" type="search" placeholder="search">
-          <button type="submit">
-            <i class="fa fa-search"></i>
-            <span class="label">search</span>
-          </button>
-        </div>
-      </form>
-    </div>
 
     <img class="oxford" src="/assets/images/ox-brand-rect.png" alt="University of Oxford">
   </div>
@@ -65,234 +50,103 @@
 
   <main class="fullpage-scroll">
 
-    <div class="disclaimer">
-      <div class="container">
-        <i class="icon fa fa-exclamation-triangle"></i>
-        <p>Thanks for your interest in the <em>Special Divine Action</em> Project! You've found our development and test site. Please feel free to look around, but understand that this is not ready for prime time and you will encounter broken links, missing data and a wide range of other issues. We will be launching the site to the public at the <a href="https://www.aarweb.org/">American Academy of Religion</a> (AAR) in November 2016.</p>
-      </div>
-    </div>
-
     <div class="fullpage-scroll-section">
       <section class="billboard">
   <div class="banners">
     <a href="" class="prev">
-      <i class="fa fa-chevron-left"></i>
+      <i class="material-icons">chevron_left</i>
     </a>
     <a href="" class="next">
-      <i class="fa fa-chevron-right"></i>
+      <i class="material-icons">chevron_right</i>
     </a>
     
-      <div class="banner banner-1" style="background-image:url(/assets/images/banners/slider-female.jpg)">
+      <div class="banner banner-1" style="background-image:url(/assets/images/banners/01-wonder.jpg); background-position: 66.0% 85.0%;">
         <div class="container">
-          <aside class="content basic-title right"><h2>Does God Act?</h2>
-</aside>
+          <aside class="content top left">
+            <h2>Does God Act?</h2> <p>Explore one of the most profound influences on ideas, culture and civilisation</p>
+
+            
+              <div class="flex-none layout-row layout-align-center-center play-icon">
+                <a href="#banner1-video" data-toggle="modal">
+                  <i class="material-icons">play_circle_filled</i>
+                </a>
+              </div>
+            
+          </aside>
         </div>
       </div>
     
-      <div class="banner banner-2" style="background-image:url(/assets/images/banners/slider-floating-books.jpg)">
+      <div class="banner banner-2" style="background-image:url(/assets/images/banners/02-digital-bodleian.jpg); background-position: 42.0% 50.0%;">
         <div class="container">
-          <aside class="content upper-box textbg-copper"><h2>Digital Library</h2>
-</aside>
+          <aside class="content dark top right">
+            <h2>Digital Library</h2> <p>Research the landscape of insights and influences that shape our understanding</p>
+
+            
+          </aside>
         </div>
       </div>
     
-      <div class="banner banner-3" style="background-image:url(/assets/images/banners/slider-empty-tomb.jpg)">
+      <div class="banner banner-3" style="background-image:url(/assets/images/banners/04-media-mcgrath-banner.jpg); background-position: 10.0% 50.0%;">
         <div class="container">
-          <aside class="content upper-box textbg-copper"><h2>Student and Teacher Support</h2>
-</aside>
+          <aside class="content overlay bottom left">
+            <h2>Media Centre</h2> <p>Browse our extensive multimedia library with more than 100 videos</p>
+
+            
+          </aside>
         </div>
       </div>
     
-      <div class="banner banner-4" style="background-image:url(/assets/images/banners/slider-radcliffe.jpg)">
+      <div class="banner banner-4" style="background-image:url(/assets/images/banners/05-albert.png);">
         <div class="container">
-          <aside class="content upper-box"><h2>Conferences and Publications</h2>
-</aside>
-        </div>
-      </div>
-    
-      <div class="banner banner-5" style="background-image:url(/assets/images/banners/slider-people.jpg)">
-        <div class="container">
-          <aside class="content upper-box textbg-copper"><h2>Public Engagement</h2>
-</aside>
+          <aside class="content overlay bottom left">
+            <h2>Albert Explores</h2> <p>Join Albert for fun exploration of key themes in Special Divine Action</p>
+
+            
+              <div class="flex-none layout-row layout-align-center-center play-icon">
+                <a href="#banner4-video" data-toggle="modal">
+                  <i class="material-icons">play_circle_filled</i>
+                </a>
+              </div>
+            
+          </aside>
         </div>
       </div>
     
   </div>
-  <div class="brow-container">
-    <div class="brow">
-      
-        
-          <a href="https://youtu.be/HmSKMbq7Fk8" class="play-video play-video-1">
-            <img src="/assets/images/icon-video-play.png" alt="play video">
-            <span class="video-details">
-              <span class="title">Introducing the Project</span>
-              
-                <span class="length">(3:40)</span>
-              
-            </span>
-          </a>
-        
-      
-        
-          <a href="https://youtu.be/EMjg86wlGU0" class="play-video play-video-2">
-            <img src="/assets/images/icon-video-play.png" alt="play video">
-            <span class="video-details">
-              <span class="title">The State of the Art and the Uses of History</span>
-              
-                <span class="length">(31:48)</span>
-              
-            </span>
-          </a>
-        
-      
-        
-          <a href="https://youtu.be/-AJfNBuOIpY" class="play-video play-video-3">
-            <img src="/assets/images/icon-video-play.png" alt="play video">
-            <span class="video-details">
-              <span class="title">The Historian and the Miraculous</span>
-              
-                <span class="length">(1:16:36)</span>
-              
-            </span>
-          </a>
-        
-      
-        
-          <a href="https://youtu.be/TXqhB_RqEzI" class="play-video play-video-4">
-            <img src="/assets/images/icon-video-play.png" alt="play video">
-            <span class="video-details">
-              <span class="title">Cultural and Theological Resistance</span>
-              
-                <span class="length">(1:12:31)</span>
-              
-            </span>
-          </a>
-        
-      
-        
-          <a href="https://youtu.be/waxSBeqbzOI" class="play-video play-video-5">
-            <img src="/assets/images/icon-video-play.png" alt="play video">
-            <span class="video-details">
-              <span class="title">God's Work in Nature</span>
-              
-                <span class="length">(1:22:39)</span>
-              
-            </span>
-          </a>
-        
-      
-      <ol class="control-nav">
-        
-          <li><a href="" class="control-nav-trigger" data-index="1">1</a></li>
-        
-          <li><a href="" class="control-nav-trigger" data-index="2">2</a></li>
-        
-          <li><a href="" class="control-nav-trigger" data-index="3">3</a></li>
-        
-          <li><a href="" class="control-nav-trigger" data-index="4">4</a></li>
-        
-          <li><a href="" class="control-nav-trigger" data-index="5">5</a></li>
-        
-      </ol>
-    </div>
-  </div>
-  <div class="intro-text">
+  <ol class="control-nav layout-row layout-align-center-center">
     
-      <section class="slide container slide-1">
-        <div class="leadin">
-          <p>Is every action in the cosmos only an effect of some other action in the cosmos? Or is there something more? Is there divine action?
-</p>
-        </div>
-        <div class="text">
-          <p>One fact is certain: belief in these special divine actions has had an immense impact on human society and civilisation. Such beliefs shape, often decisively, the way we think about the world, what we do in the world, and what we hope for now and in the future.
-</p>
-          
-            <a href="about/overview.html" class="read-more">Read More</a>
-          
-        </div>
-      </section>
+      <li><a href="" class="control-nav-trigger" data-index="1">1</a></li>
     
-      <section class="slide container slide-2">
-        <div class="leadin">
-          <p>What do centuries of scholarship teach about special divine action in relation to our philosophical, religious, and scientific worldviews?
-</p>
-        </div>
-        <div class="text">
-          <p>The Special Divine Action Project assists scholars by providing access to digital versions  of key works,  topical essays, biographies and tools to explore the influences, provocations and convergences among these works in science, philosophy, theology and religion.
-</p>
-          
-            <a href="about/digitallibrary.html" class="read-more">Read More</a>
-          
-        </div>
-      </section>
+      <li><a href="" class="control-nav-trigger" data-index="2">2</a></li>
     
-      <section class="slide container slide-3">
-        <div class="leadin">
-          <p>How can I study, teach or research the questions, perspectives and debates about special divine action in my school, college or university?
-</p>
-        </div>
-        <div class="text">
-          <p>The Special Divine Action Project supports study and teaching in universities, colleges, and schools, providing introductions, biographies, reviews, reading lists, audio-visual materials, course materials, course development and cluster group competitions.
-</p>
-          
-            <a href="about/digitallibrary.html" class="read-more">Read More</a>
-          
-        </div>
-      </section>
+      <li><a href="" class="control-nav-trigger" data-index="3">3</a></li>
     
-      <section class="slide container slide-4">
-        <div class="leadin">
-          <p>What research is being done by academics today on special divine action? How can I contribute or engage with such work?
-</p>
-        </div>
-        <div class="text">
-          <p>Research activities of the Special Divine Action Project include conferences with leading academics worldwide, competitively selected short papers, opportunities for debates and discussion, and keynote videos online together with a range of academic publications.
-</p>
-          
-        </div>
-      </section>
+      <li><a href="" class="control-nav-trigger" data-index="4">4</a></li>
     
-      <section class="slide container slide-5">
-        <div class="leadin">
-          <p>How can I benefit from this project in daily life? How can I explore the ideas and questions regarding special divine action in the world?
-</p>
-        </div>
-        <div class="text">
-          <p>The Special Divine Action Project provides summaries of key ideas for general use by members of the public supported by audiovisual materials and animations. All academic tools and research of the project are also made available via the web for use worldwide.
-</p>
-          
-            <a href="about/public_engagement.html" class="read-more">Read More</a>
-          
-        </div>
-      </section>
-    
-  </div>
+  </ol>
 </section>
 
 
       <a href="" class="scroll-indicator">
         <span class="label">scroll down</span>
-        <span class="icon fa-stack fa-lg">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i>
-        </span>
+        <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
 
     <div class="fullpage-scroll-section">
       <section class="main-nav layout-fill layout-xs-column layout-sm-column layout-row">
-  <ul class="buckets layout-column">
+  <ul class="buckets layout-sm-row layout-gt-sm-column">
     
       <li class="bucket flex layout-column" ng-repeat="module in vm.modules" ng-class="{active:module.active}">
-        <a class="flex layout-column layout-align-center" href="#introduction" ng-click="vm.setActive(module)"><span>Introduction</span></a>
+        <a class="flex layout-column layout-align-sm-center-center layout-align-gt-sm-center-start" href="#introduction" ng-click="vm.setActive(module)"><span>Introduction</span></a>
       </li>
     
       <li class="bucket flex layout-column" ng-repeat="module in vm.modules" ng-class="{active:module.active}">
-        <a class="flex layout-column layout-align-center" href="#study" ng-click="vm.setActive(module)"><span>Study</span></a>
+        <a class="flex layout-column layout-align-sm-center-center layout-align-gt-sm-center-start" href="#study" ng-click="vm.setActive(module)"><span>Study</span></a>
       </li>
     
       <li class="bucket flex layout-column" ng-repeat="module in vm.modules" ng-class="{active:module.active}">
-        <a class="flex layout-column layout-align-center" href="#research" ng-click="vm.setActive(module)"><span>Research</span></a>
+        <a class="flex layout-column layout-align-sm-center-center layout-align-gt-sm-center-start" href="#research" ng-click="vm.setActive(module)"><span>Research</span></a>
       </li>
     
   </ul>
@@ -302,96 +156,88 @@
         <ul class="controls layout-row layout-wrap">
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#introduction-meaning" ng-click="vm.setActive(section)">Meaning</a>
+              <a href="#introduction-videos" ng-click="vm.setActive(section)">Videos</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#introduction-narratives" ng-click="vm.setActive(section)">Narratives</a>
+              <a href="#introduction-questions" ng-click="vm.setActive(section)">Questions</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#introduction-assessment" ng-click="vm.setActive(section)">Assessment</a>
+              <a href="#introduction-project" ng-click="vm.setActive(section)">Project</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#introduction-imagination" ng-click="vm.setActive(section)">Imagination</a>
+              <a href="#introduction-albert" ng-click="vm.setActive(section)">Albert</a>
             </li>
           
         </ul>
         <div class="panels flex">
           
-            <div id="introduction-meaning" class="panel-set" ng-show="vm.active">
+            <div id="introduction-videos" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Overview</h3>
-                          <p>Review the idea of special divine action in general, as well as its relation to broader notions of divine and supranatural action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/grace.jpg); background-position: 69.0% 46.0%;">
+                            
+                            <a class="flex layout-column" href="#introduction-videos-grace-video" data-toggle="modal">
+                                <h3>Grace</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Categorisation</h3>
-                          <p>Examine the definitions of the principal types of purported special divine action and their relation to the natural world.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/miracles.jpg); background-position: 25.0% 33.0%;">
+                            
+                            <a class="flex layout-column" href="#introduction-videos-miracles-video" data-toggle="modal">
+                                <h3>Miracles</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Paradigms</h3>
-                          <p>Explore persons, instances, and archetypes that have influenced the meaning and understanding of special divine action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/inspiration.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-videos-inspiration-video" data-toggle="modal">
+                                <h3>Inspiration</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Contemporary</h3>
-                          <p>Survey contemporary questions and views regarding the meaning and implications of special divine action.
-</p>
-                        </div>
-                      
-                    </div>
-                  
-                </div>
-              
-            </div>
-          
-            <div id="introduction-narratives" class="panel-set" ng-show="vm.active">
-              
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
-                  
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
-                      
-                        <div class="panel flex-50">
-                          <h3>Worldviews</h3>
-                          <p>Review how diverse ways of understanding special divine action are shaped by diverse worldviews: unifying pictures or narratives about the world and meaning of life.
-</p>
-                        </div>
-                      
-                        <div class="panel flex-50">
-                          <h3>Science</h3>
-                          <p>Examine the place and meaning of special divine action within various scientific accounts of the most fundamental causes and principles of the world.
-</p>
-                        </div>
-                      
-                    </div>
-                  
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
-                      
-                        <div class="panel flex-50">
-                          <h3>Philosophy</h3>
-                          <p>Examine the place and meaning of special divine action within various philosophical accounts of the most fundamental causes and principles of the world.
-</p>
-                        </div>
-                      
-                        <div class="panel flex-50">
-                          <h3>Theology and Religion</h3>
-                          <p>Explore key ideas about special divine action across some of the principal religious traditions, and consider influential questions, controversies, and views in theology.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/providence.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-videos-providence-video" data-toggle="modal">
+                                <h3>Providence</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -400,38 +246,70 @@
               
             </div>
           
-            <div id="introduction-assessment" class="panel-set" ng-show="vm.active">
+            <div id="introduction-questions" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Overview</h3>
-                          <p>Review the importance and challenges of assessing purported special divine action generally, across a range of perspectives.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-questions-do-miracles-break-the-laws-of-nature-as-david-hume-claimed-video" data-toggle="modal">
+                                <h3>Do miracles break the laws of nature, as David Hume claimed?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Epistemology</h3>
-                          <p>Investigate the characteristics, sources and limits of human knowledge regarding the assessment of special divine action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-questions-what-does-st-paul-mean-by-divine-participation-video" data-toggle="modal">
+                                <h3>What does St Paul mean by divine participation?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Testimony</h3>
-                          <p>Investigate the issues involved in the communication and assessment of a testimony of special divine action from a first to a second person.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-questions-why-should-humanists-be-interested-in-special-divine-action-video" data-toggle="modal">
+                                <h3>Why should humanists be interested in special divine action?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Commentators</h3>
-                          <p>Review a selection of key commentators, holding diverse views, who have shaped many of the important debates about the assessment of special divine action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-questions-do-you-have-advice-for-young-scholars-interested-in-sda-video" data-toggle="modal">
+                                <h3>Do you have advice for young scholars interested in SDA?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -440,38 +318,142 @@
               
             </div>
           
-            <div id="introduction-imagination" class="panel-set" ng-show="vm.active">
+            <div id="introduction-project" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Mechanistic</h3>
-                          <p>Explore the notion of a machine as a root metaphor for imagining the operations of the world and special divine action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-project-how-does-the-special-divine-action-project-link-facts-to-narratives-video" data-toggle="modal">
+                                <h3>How does the special divine action project link facts to narratives?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Illuminative</h3>
-                          <p>Explore the role of light as a metaphor for special divine action and its assessment, especially grace, inspiration, and the discernment of providential action.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-project-the-special-divine-action-project-background-rationale-and-impact-video" data-toggle="modal">
+                                <h3>The special divine action project: background, rationale, and impact</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Organic</h3>
-                          <p>Explore the role of organic metaphors for imagining the world and special divine action, especially in terms of nurture or cultivation.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-project-how-does-a-thematic-research-collection-address-the-issues-of-sda-video" data-toggle="modal">
+                                <h3>How does a thematic research collection address the issues of SDA?</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Interpersonal</h3>
-                          <p>Explore interpersonal action and character formation as a way to understand key aspects of purported special divine action, especially its ultimate purposes.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-video" >
+                            
+                            <a class="flex layout-column layout-align-center-center" href="#introduction-project-scientific-perspectives-on-four-types-of-special-divine-action-video" data-toggle="modal">
+                                <h3>Scientific perspectives on four types of special divine action</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
+                        </div>
+                      
+                    </div>
+                  
+                </div>
+              
+            </div>
+          
+            <div id="introduction-albert" class="panel-set" ng-show="vm.active">
+              
+                <div class="layout-row layout-wrap layout-fill">
+                  
+                    <div class="flex-50 flex-xs-100 layout-column">
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/albert/grace.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-albert-grace-video" data-toggle="modal">
+                                <h3>Grace</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
+                        </div>
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/albert/inspiration.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-albert-inspiration-video" data-toggle="modal">
+                                <h3>Inspiration</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
+                        </div>
+                      
+                    </div>
+                  
+                    <div class="flex-50 flex-xs-100 layout-column">
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/albert/miracles.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-albert-miracles-video" data-toggle="modal">
+                                <h3>Miracles</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
+                        </div>
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-image panel-content-video"  style="background-image: url(/assets/images/nav-tiles/albert/providence.jpg);">
+                            
+                            <a class="flex layout-column" href="#introduction-albert-providence-video" data-toggle="modal">
+                                <h3>Providence</h3>
+                                
+                                <div class="flex-none layout-row layout-align-center-center play-icon">
+                                  <i class="material-icons inverse">play_circle_filled</i>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -487,96 +469,92 @@
         <ul class="controls layout-row layout-wrap">
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#study-why" ng-click="vm.setActive(section)">Why?</a>
+              <a href="#study-meaning" ng-click="vm.setActive(section)">Meaning</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#study-schools" ng-click="vm.setActive(section)">Schools</a>
+              <a href="#study-narratives" ng-click="vm.setActive(section)">Narratives</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#study-universities" ng-click="vm.setActive(section)">Universities</a>
+              <a href="#study-assessment" ng-click="vm.setActive(section)">Assessment</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#study-other" ng-click="vm.setActive(section)">Other</a>
+              <a href="#study-imagination" ng-click="vm.setActive(section)">Imagination</a>
             </li>
           
         </ul>
         <div class="panels flex">
           
-            <div id="study-why" class="panel-set" ng-show="vm.active">
+            <div id="study-meaning" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Humanities</h3>
-                          <p>Examine why the topic of special divine action is important to a wide range of disciplines in the humanities including history, literature, scripture, and theology.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-link" >
+                            
+                              <a href="/about" class="flex">
+                                <h3>Grace</h3>
+                                <p>Grace is associated with the idea of blessing, beauty, and salvation. The novel meaning of grace in theology is that of a seed in the ground of human nature, a transformation or second birth into a new life as a child of God.
 </p>
+                                <div class="flex layout-row layout-align-end-end read-more">
+                                  <span>&raquo;</span>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Creativity</h3>
-                          <p>Examine why the topic of special divine action is important for creativity, including art, architecture, literature, and music.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-link" >
+                            
+                              <a href="/about" class="flex">
+                                <h3>Inspiration</h3>
+                                <p>Inspiration is insight with a sense of divine illumination. This experience is like a light shining in darkness or a shift to a new and higher perspective, allowing us to see the things we know fit together in a new way.
 </p>
+                                <div class="flex layout-row layout-align-end-end read-more">
+                                  <span>&raquo;</span>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Sciences</h3>
-                          <p>Examine why the topic of special divine action is important to the sciences, and to the history and philosophy of science.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-link" >
+                            
+                              <a href="/about" class="flex">
+                                <h3>Miracles</h3>
+                                <p>A miracle is an object of wonder without a natural cause, attributed to special divine action. Rather than ‘breaking the laws of nature’ in a machine-like cosmos, a miracle is better considered as exceeding the productive power of nature.
 </p>
+                                <div class="flex layout-row layout-align-end-end read-more">
+                                  <span>&raquo;</span>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>General</h3>
-                          <p>Examine why the topic of special divine action is important for anyone reflecting on the meaning of life and human hope.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column panel-content-link" >
+                            
+                              <a href="/about" class="flex">
+                                <h3>Providence</h3>
+                                <p>Providence implies the notion of divine direction of cosmic and human affairs with wise benevolence. In a providential cosmos, time is not simply a succession of moments but has a more organic meaning, marking progress towards some fruitful goal.
 </p>
-                        </div>
-                      
-                    </div>
-                  
-                </div>
-              
-            </div>
-          
-            <div id="study-schools" class="panel-set" ng-show="vm.active">
-              
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
-                  
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
-                      
-                        <div class="panel flex-50">
-                          <h3>Overview</h3>
-                          <p>Review and make use of summaries, ideas, and links to resources to support students, teachers, and schools.
-</p>
-                        </div>
-                      
-                        <div class="panel flex-50">
-                          <h3>Humanities</h3>
-                          <p>Explore ideas and resources of the project for subjects in the humanities including art, geography, history, languages and literature, and music.
-</p>
-                        </div>
-                      
-                    </div>
-                  
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
-                      
-                        <div class="panel flex-50">
-                          <h3>Sciences</h3>
-                          <p>Explore ideas and resources of the project for the sciences and the history of science.
-</p>
-                        </div>
-                      
-                        <div class="panel flex-50">
-                          <h3>Religion</h3>
-                          <p>Explore ideas and resources of the project for philosophy, theology, and religious studies.
-</p>
+                                <div class="flex layout-row layout-align-end-end read-more">
+                                  <span>&raquo;</span>
+                                </div>
+                              </a>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -585,38 +563,62 @@
               
             </div>
           
-            <div id="study-universities" class="panel-set" ng-show="vm.active">
+            <div id="study-narratives" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Overview</h3>
-                          <p>Review and utilise summaries, ideas, and links to resources of the project to support work at the university level, including online course materials.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Philosophies of God</h3>
+                                <p>Investigate the meaning, knowledge and assessment of special divine action within influential narratives of God and creation, including: deism; panentheism; open theism; process theology; agnosticism and atheism; impersonal conceptions of God; Trinitarianism; Unitarianism; concurrentism; ‘OmniGod’; occasionalism; and classical theism.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Humanities</h3>
-                          <p>Explore ideas and resources of the project for a wide range of subjects in the humanities.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Theology and religion</h3>
+                                <p>Explore the meaning, knowledge and assessment of special divine action as developed within influential theological and religious traditions including: Hinduism; Buddhism; Zoroastrianism; Judaism; the Greek and Roman world; Christianity (Old Testament, New Testament, Post-Apocalyptic); and Islam.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Sciences</h3>
-                          <p>Explore ideas and resources of the project for the sciences, and for the philosophy and history of science.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Philosophies of the world</h3>
+                                <p>Survey diverse philosophies of the world for framing the meaning and assessment of special divine action: materialism; determinism; indeterminism; hylomorphism; emergentism and holism; panpsychism; paradigms of physics; laws of nature; dualism; models of causation.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Religion</h3>
-                          <p>Explore ideas and resources of the project for theology, religious studies, philosophical theology, and scripture scholarship.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Historical development</h3>
+                                <p>View perspectives on special divine action over the history of philosophy and in the philosophy of history. Examine recurring issues including the problem of evil, and key commentators including Aquinas, Spinoza, Hume, Kant, Bolzero, Newman, and C. S. Lewis.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -625,38 +627,126 @@
               
             </div>
           
-            <div id="study-other" class="panel-set" ng-show="vm.active">
+            <div id="study-assessment" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Personal</h3>
-                          <p>Explore ideas and the possible personal implications of questions, view, and debates about special divine action.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Encounter</h3>
+                                <p>Investigate the reported experiential and sometimes transformative aspects of encountering purported special divine action. These overviews also examine special questions regarding the weighing of evidence drawn from testimony and ways in which experience shapes faith and faith shapes experience.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Media</h3>
-                          <p>Review terms, key ideas and resources of the project for those covering issues of special divine action in the media.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Teaching</h3>
+                                <p>Enhance teaching in schools, colleges, universities and personal study with a suite of resources including animations, short video introductions, interviews, lectures at academic conferences, and two entire online courses by Prof. MrcGrew on the “Deist Controversy” and “The Great Debate”.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Politics</h3>
-                          <p>Examine ideas about special divine action that are important for those engaged in politics, political philosophy and history.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Big Questions</h3>
+                                <p>Watch or listen to interviews with cultural critics, historians, philosophers, polymaths, scientists, scripture scholars, and theologians, on the big questions of special divine action. Interviews with Prof. McGrew and Dr Audenaert also introduce the SDA project and its digital humanities tools.
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Religious</h3>
-                          <p>Understand the landscape of ideas and debates about special divine action, in ways that are important for religious ministry.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Commentators</h3>
+                                <p>Learn about the key commentators on special divine action, across a wide range of viewpoints, as starting points for exploring the digital humanities database. Also follow links to thematic summaries of key figures who have shaped the historical development of worldviews.
 </p>
+                              </div>
+                            
+                          </div>
+                        </div>
+                      
+                    </div>
+                  
+                </div>
+              
+            </div>
+          
+            <div id="study-imagination" class="panel-set" ng-show="vm.active">
+              
+                <div class="layout-row layout-wrap layout-fill">
+                  
+                    <div class="flex-50 flex-xs-100 layout-column">
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Watchmaker</h3>
+                                <p>Analyse the mechanistic worldview of early modern science and new biological discoveries that gave rise to the image of God as a watchmaker. Appreciate the influence, limitations, and criticisms of this metaphor, from philosophical, theological, and scientific perspectives.
+</p>
+                              </div>
+                            
+                          </div>
+                        </div>
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Gardener</h3>
+                                <p>Stroll through the ‘Garden of God’ in Genesis, the Persian term ‘paradise,’ and the Father being the ‘vinedresser’ (John 15:1). Muse about divine action in the manner of a gardener in a philosophical story, the ‘Parable of the Garden’.
+</p>
+                              </div>
+                            
+                          </div>
+                        </div>
+                      
+                    </div>
+                  
+                    <div class="flex-50 flex-xs-100 layout-column">
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Illuminator</h3>
+                                <p>See the power of illumination as a metaphor for divine inspiration and as an ancient theory of knowledge generally, such as Plato’s myth of the cave. Contemplate parallels and overlaps with new research into understanding, insight, and gestalt perception.
+</p>
+                              </div>
+                            
+                          </div>
+                        </div>
+                      
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Spouse</h3>
+                                <p>Delight in the astounding and beautiful image of special divine action in the manner of a covenant, the espousal of the soul to God in the Song of Songs, and the Wedding Feast of the Lamb in the Book of Revelation.
+</p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -672,11 +762,11 @@
         <ul class="controls layout-row layout-wrap">
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#research-overview" ng-click="vm.setActive(section)">Overview</a>
+              <a href="#research-sources" ng-click="vm.setActive(section)">Sources</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
-              <a href="#research-sources" ng-click="vm.setActive(section)">Sources</a>
+              <a href="#research-directions" ng-click="vm.setActive(section)">Directions</a>
             </li>
           
             <li class="flex flex-xs-50" ng-repeat="section in vm.sections" ng-class="{active:section.active}">
@@ -690,38 +780,62 @@
         </ul>
         <div class="panels flex">
           
-            <div id="research-overview" class="panel-set" ng-show="vm.active">
+            <div id="research-sources" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Motivation</h3>
-                          <p>Review the challenges to research into issues associated with special divine action, and the ways in which this project addresses these challenges.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Overview</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Connections</h3>
-                          <p>Examine the ways in which the project connects persons and documents to reveal landscapes of ideas and influences.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Historical material</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Questions</h3>
-                          <p>Investigate sample research questions and guidelines for formulating new questions suitable for making use of the resources of the project.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Themes</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Guided Tour</h3>
-                          <p>Explore the resources of the project through a guided tour of the website.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Editorial approach</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -730,38 +844,62 @@
               
             </div>
           
-            <div id="research-sources" class="panel-set" ng-show="vm.active">
+            <div id="research-directions" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Texts</h3>
-                          <p>Explore the historical database of texts, including articles, summaries, reviews, and connections.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Relevance</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Articles</h3>
-                          <p>Refer to the thematic overviews that summarise the key themes associated with special divine action.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Benefits for research</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>People</h3>
-                          <p>Explore the historical database of persons, including summaries and connections.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Finding research questions</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Audiovisual</h3>
-                          <p>Investigate the audiovisual resources of the project, including videos, audio recordings, and short animations.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Sample research questions</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -772,36 +910,59 @@
           
             <div id="research-tools" class="panel-set" ng-show="vm.active">
               
-                <div class="layout-row layout-wrap layout-fill layout-padding border">
+                <div class="layout-row layout-wrap layout-fill">
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Source Map</h3>
-                          <p>Explore the maps of influences that connect key historical source texts, with an adjustable 'fish-eye' magnified view.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Getting started</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Spacetime</h3>
-                          <p>Explore the distributions of key historical source texts ordered by space and time.
-</p>
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Influence landscape</h3>
+                                <p></p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
                   
-                    <div class="flex-50 flex-xs-100 layout-column layout-padding border">
+                    <div class="flex-50 flex-xs-100 layout-column">
                       
-                        <div class="panel flex-50">
-                          <h3>Topic Map</h3>
-                          <p>Explore a map of key topics associated with special divine action, and use this map to link to thematic summaries.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>Visual workspace</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
-                        <div class="panel flex-50">
-                          <h3>Relationships</h3>
-                          <p>Use a browser to access information and relationships of project materials.
+                        <div class="panel flex-50 layout-column">
+                          <div class="panel-content flex layout-column" >
+                            
+                              <div class="flex">
+                                <h3>online lectures</h3>
+                                <p>text coming soon
 </p>
+                              </div>
+                            
+                          </div>
                         </div>
                       
                     </div>
@@ -833,11 +994,8 @@
 
 
       <a href="" class="scroll-indicator">
-         <span class="label">scroll down</span>
-         <span class="icon fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i>
-         </span>
+        <span class="label">scroll down</span>
+        <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
 
@@ -897,11 +1055,8 @@
       </div>
 
       <a href="" class="scroll-indicator">
-         <span class="label">scroll down</span>
-         <span class="icon fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i>
-         </span>
+        <span class="label">scroll down</span>
+        <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
 
@@ -926,11 +1081,8 @@
       </div>
 
       <a href="" class="scroll-indicator">
-         <span class="label">scroll down</span>
-         <span class="icon fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-chevron-down fa-stack-1x fa-inverse"></i>
-         </span>
+        <span class="label">scroll down</span>
+        <i class="material-icons">keyboard_arrow_down</i>
       </a>
     </div>
 
@@ -961,13 +1113,449 @@
 
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+    
+      <div class="billboard-video modal fade" id="banner1-video" tabindex="-1" role="dialog" aria-labelledby="banner1-video-label">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 id="banner1-video-label" class="modal-title">Video</h4>
+            </div>
+            <div class="video-container">
+              <iframe data-src="https://www.youtube.com/embed/ktYkecCsUFU?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  
+    
+  
+    
+  
+    
+      <div class="billboard-video modal fade" id="banner4-video" tabindex="-1" role="dialog" aria-labelledby="banner4-video-label">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 id="banner4-video-label" class="modal-title">Video</h4>
+            </div>
+            <div class="video-container">
+              <iframe data-src="https://www.youtube.com/embed/58iqoZfxtE8?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+    
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-videos-grace-video" tabindex="-1" role="dialog" aria-labelledby="introduction-videos-grace-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-videos-grace-video-label">Grace</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/GIjPV11WcwY?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-videos-miracles-video" tabindex="-1" role="dialog" aria-labelledby="introduction-videos-miracles-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-videos-miracles-video-label">Miracles</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/MRFSnBM2OBQ?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-videos-inspiration-video" tabindex="-1" role="dialog" aria-labelledby="introduction-videos-inspiration-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-videos-inspiration-video-label">Inspiration</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/6-4bPc71qgc?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-videos-providence-video" tabindex="-1" role="dialog" aria-labelledby="introduction-videos-providence-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-videos-providence-video-label">Providence</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/Ktz-KVmsKV8?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+    
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-questions-do-miracles-break-the-laws-of-nature-as-david-hume-claimed-video" tabindex="-1" role="dialog" aria-labelledby="introduction-questions-do-miracles-break-the-laws-of-nature-as-david-hume-claimed-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-questions-do-miracles-break-the-laws-of-nature-as-david-hume-claimed-video-label">Do miracles break the laws of nature, as David Hume claimed?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/OPf6jsmeU4E?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-questions-what-does-st-paul-mean-by-divine-participation-video" tabindex="-1" role="dialog" aria-labelledby="introduction-questions-what-does-st-paul-mean-by-divine-participation-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-questions-what-does-st-paul-mean-by-divine-participation-video-label">What does St Paul mean by divine participation?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/ifZyiKs49F0?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-questions-why-should-humanists-be-interested-in-special-divine-action-video" tabindex="-1" role="dialog" aria-labelledby="introduction-questions-why-should-humanists-be-interested-in-special-divine-action-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-questions-why-should-humanists-be-interested-in-special-divine-action-video-label">Why should humanists be interested in special divine action?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/e7YSxVeWBHg?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-questions-do-you-have-advice-for-young-scholars-interested-in-sda-video" tabindex="-1" role="dialog" aria-labelledby="introduction-questions-do-you-have-advice-for-young-scholars-interested-in-sda-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-questions-do-you-have-advice-for-young-scholars-interested-in-sda-video-label">Do you have advice for young scholars interested in SDA?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/uKoXGbtNWR8?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+    
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-project-how-does-the-special-divine-action-project-link-facts-to-narratives-video" tabindex="-1" role="dialog" aria-labelledby="introduction-project-how-does-the-special-divine-action-project-link-facts-to-narratives-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-project-how-does-the-special-divine-action-project-link-facts-to-narratives-video-label">How does the special divine action project link facts to narratives?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/UFBnwxQhKw8?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-project-the-special-divine-action-project-background-rationale-and-impact-video" tabindex="-1" role="dialog" aria-labelledby="introduction-project-the-special-divine-action-project-background-rationale-and-impact-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-project-the-special-divine-action-project-background-rationale-and-impact-video-label">The special divine action project: background, rationale, and impact</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/RSi2bu2sFLk?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-project-how-does-a-thematic-research-collection-address-the-issues-of-sda-video" tabindex="-1" role="dialog" aria-labelledby="introduction-project-how-does-a-thematic-research-collection-address-the-issues-of-sda-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-project-how-does-a-thematic-research-collection-address-the-issues-of-sda-video-label">How does a thematic research collection address the issues of SDA?</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/NvsQ0ZSl9rg?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-project-scientific-perspectives-on-four-types-of-special-divine-action-video" tabindex="-1" role="dialog" aria-labelledby="introduction-project-scientific-perspectives-on-four-types-of-special-divine-action-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-project-scientific-perspectives-on-four-types-of-special-divine-action-video-label">Scientific perspectives on four types of special divine action</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/9ErR56Bosm0?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+    
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-albert-grace-video" tabindex="-1" role="dialog" aria-labelledby="introduction-albert-grace-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-albert-grace-video-label">Grace</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/5fAvu2k3u8g?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-albert-inspiration-video" tabindex="-1" role="dialog" aria-labelledby="introduction-albert-inspiration-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-albert-inspiration-video-label">Inspiration</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/FTeHXM1GfWY?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+        
+          
+            <div class="nav-video modal fade" id="introduction-albert-miracles-video" tabindex="-1" role="dialog" aria-labelledby="introduction-albert-miracles-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-albert-miracles-video-label">Miracles</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/lRrr1JLV1JM?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+          
+            <div class="nav-video modal fade" id="introduction-albert-providence-video" tabindex="-1" role="dialog" aria-labelledby="introduction-albert-providence-video-label">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="introduction-albert-providence-video-label">Providence</h4>
+                  </div>
+                  <div class="video-container">
+                    <iframe data-src="https://www.youtube.com/embed/dN9YhngPNGI?autoplay=1" frameborder="0" allowfullscreen></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        
+      
+    
+  
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+  
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+        
+          
+        
+          
+        
+      
+        
+          
+        
+          
+        
+      
+    
+      
+    
+  
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-87254463-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="/js/main.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.9/jquery.fullPage.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.9/vendors/jquery.easings.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.9/vendors/jquery.slimscroll.min.js"></script>
   <script src="/js/home.js"></script>
+  <script src="/js/bootstrap.js"></script>
 
 </body>
 </html>

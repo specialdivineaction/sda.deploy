@@ -1,6 +1,3 @@
-.billboard .intro-text .slide .text .read-more:active, .billboard .intro-text .slide .text .read-more:focus, .billboard .intro-text .slide .text .read-more:hover {
-  text-decoration: underline; }
-
 .billboard .banners .banner {
   *zoom: 1; }
   .billboard .banners .banner:before {
@@ -11,10 +8,6 @@
     content: ' ';
     display: table; }
 
-.billboard > .brow-container {
-  margin: 0 auto;
-  max-width: 1600px; }
-
 @font-face {
   font-family: "CenturyStd-BookItalic";
   src: url("../assets/fonts/CenturyStd-BookItalic.eot");
@@ -23,16 +16,11 @@
   font-family: "CenturyStd-Book";
   src: url("../assets/fonts/CenturyStd-Book.eot");
   src: url("../assets/fonts/CenturyStd-Book.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/CenturyStd-Book.woff") format("woff"), url("../assets/fonts/CenturyStd-Book.ttf") format("truetype"); }
-.billboard .banners .banner .container .content h2, .billboard > .brow-container .brow a.play-video .video-details .length, .billboard .intro-text .slide .leadin {
-  font-family: "CenturyStd-Book";
-  font-weight: normal;
-  font-style: normal; }
-
 @font-face {
   font-family: "AvenirLTStd-Heavy";
   src: url("../assets/fonts/AvenirLTStd-Heavy.eot");
   src: url("../assets/fonts/AvenirLTStd-Heavy.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/AvenirLTStd-Heavy.woff") format("woff"), url("../assets/fonts/AvenirLTStd-Heavy.ttf") format("truetype"); }
-.billboard .intro-text .slide .text .read-more, .main-nav .buckets .bucket, .main-nav .modules .module .controls {
+.main-nav .buckets .bucket, .main-nav .modules .module .controls {
   font-family: "AvenirLTStd-Heavy";
   font-weight: normal;
   font-style: normal; }
@@ -50,7 +38,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%; }
+  height: 100%;
+  position: relative; }
   .billboard .banners {
     flex-grow: 1;
     align-self: stretch;
@@ -60,28 +49,29 @@
       color: #fff;
       text-decoration: none;
       position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 20%;
+      top: 50%;
+      margin-top: -1.5rem;
       z-index: 2;
       opacity: 0.3;
       transition: 400ms;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 0.5em;
-      font-size: 300%; }
+      padding: 0.5em; }
       .billboard .banners .next:hover, .billboard .banners .prev:hover {
         opacity: 1; }
       .billboard .banners .next:active, .billboard .banners .next:focus, .billboard .banners .prev:active, .billboard .banners .prev:focus {
         outline: 0; }
+      .billboard .banners .next > i, .billboard .banners .prev > i {
+        font-size: 3rem;
+        color: rgba(255, 255, 255, 0.87);
+        background: rgba(0, 0, 0, 0.47);
+        border-radius: 3px; }
     .billboard .banners .prev {
       left: 0;
-      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
       align-items: flex-start; }
     .billboard .banners .next {
       right: 0;
-      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
       align-items: flex-end; }
     .billboard .banners .banner {
       position: absolute;
@@ -106,9 +96,7 @@
         width: 100%; }
         .billboard .banners .banner .container .content {
           position: absolute;
-          color: white;
-          padding: 1rem;
-          bottom: 10%;
+          color: rgba(0, 0, 0, 0.54);
           /* Slide content is implemented using several different core templates.
            * Each template provides slots for different textual elements and lays
            * that text out appropriately to handle different page-widths. This is
@@ -126,30 +114,72 @@
            *  - .right    Display the text on the right-hand edge of the slide
            *  - .textbg   Add a background shading under the text to improve legibility
            */ }
+          @media all and (min-width: 35em) {
+            .billboard .banners .banner .container .content {
+              max-width: 50%; } }
+          @media all and (min-width: 51em) {
+            .billboard .banners .banner .container .content {
+              max-width: 40%; } }
+          .billboard .banners .banner .container .content h2 {
+            color: #a47140;
+            font-size: 2.1em;
+            line-height: 1;
+            margin: 0; }
+            @media all and (min-width: 40em) {
+              .billboard .banners .banner .container .content h2 {
+                font-size: 2.4em; } }
+          .billboard .banners .banner .container .content p {
+            margin: 0.25em 0 0 0;
+            line-height: 1.4;
+            display: none; }
+            @media all and (min-width: 35em) {
+              .billboard .banners .banner .container .content p {
+                display: block; } }
+          .billboard .banners .banner .container .content .play-icon {
+            margin-top: 1.5rem; }
+            .billboard .banners .banner .container .content .play-icon a {
+              display: block;
+              text-decoration: none; }
+              .billboard .banners .banner .container .content .play-icon a:active, .billboard .banners .banner .container .content .play-icon a:focus, .billboard .banners .banner .container .content .play-icon a:hover {
+                outline: 0; }
+            .billboard .banners .banner .container .content .play-icon i {
+              display: block;
+              font-size: 3em; }
+          .billboard .banners .banner .container .content.bottom {
+            bottom: 1rem; }
+          .billboard .banners .banner .container .content.top {
+            top: 2rem; }
+          .billboard .banners .banner .container .content.left {
+            left: 1rem; }
+          .billboard .banners .banner .container .content.right {
+            right: 1rem; }
+          .billboard .banners .banner .container .content.dark {
+            color: rgba(255, 255, 255, 0.54); }
+            .billboard .banners .banner .container .content.dark .play-icon i {
+              color: rgba(255, 255, 255, 0.54); }
+          .billboard .banners .banner .container .content.overlay {
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.75); }
+          @media all and (min-width: 20em) {
+            .billboard .banners .banner .container .content {
+              font-size: 1.125em; } }
+          @media all and (min-width: 40em) {
+            .billboard .banners .banner .container .content {
+              font-size: 1.25em; } }
+          @media all and (min-width: 60em) {
+            .billboard .banners .banner .container .content {
+              font-size: 1.5em; } }
+          @media all and (min-width: 80em) {
+            .billboard .banners .banner .container .content {
+              font-size: 1.75em; } }
           .billboard .banners .banner .container .content.basic-title p.subtitle {
             font-size: 0.9em;
             margin: 1em 0 0; }
             .billboard .banners .banner .container .content.basic-title p.subtitle p.subtitle {
               display: none; }
-          .billboard .banners .banner .container .content.basic-title.right {
-            right: 1rem;
-            text-align: left; }
           .billboard .banners .banner .container .content.basic-title.textbg {
             background-color: rgba(26, 27, 26, 0.5); }
-          @media only all and (min-width: 20em) {
-            .billboard .banners .banner .container .content.basic-title {
-              font-size: 1.125em; } }
-          @media only all and (min-width: 40em) {
-            .billboard .banners .banner .container .content.basic-title {
-              font-size: 1.25em; } }
-          @media only all and (min-width: 60em) {
-            .billboard .banners .banner .container .content.basic-title {
-              font-size: 1.5em; } }
-          @media only all and (min-width: 80em) {
-            .billboard .banners .banner .container .content.basic-title {
-              font-size: 1.75em; } }
           .billboard .banners .banner .container .content.upper-box {
-            color: white;
             top: 1rem;
             left: 1rem;
             bottom: auto;
@@ -158,13 +188,12 @@
             .billboard .banners .banner .container .content.upper-box h2 {
               font-size: 1.5em; }
             .billboard .banners .banner .container .content.upper-box h3 {
-              color: white;
+              color: inherit;
               font-size: 1.1em;
               margin-left: 1em;
               margin-top: 0.25em;
               margin-bottom: 1em; }
             .billboard .banners .banner .container .content.upper-box p.blurb {
-              color: white;
               font-size: 0.8em;
               margin: 0.5em 0 0;
               padding-right: 3em; }
@@ -176,197 +205,50 @@
               background-color: rgba(26, 27, 26, 0.35); }
               .billboard .banners .banner .container .content.upper-box.textbg-copper {
                 background-color: rgba(184, 133, 84, 0.5); }
-            @media only all and (min-width: 20em) {
+            @media all and (min-width: 20em) {
               .billboard .banners .banner .container .content.upper-box {
                 max-width: 80%;
                 font-size: 1.125em;
                 padding-top: 7.5%; } }
-            @media only all and (min-width: 30em) {
+            @media all and (min-width: 30em) {
               .billboard .banners .banner .container .content.upper-box {
                 padding-top: 2rem; }
                 .billboard .banners .banner .container .content.upper-box p.blurb {
                   display: block; } }
-            @media only all and (min-width: 40em) {
+            @media all and (min-width: 40em) {
               .billboard .banners .banner .container .content.upper-box {
                 font-size: 1.25em; } }
-            @media only all and (min-width: 60em) {
+            @media all and (min-width: 60em) {
               .billboard .banners .banner .container .content.upper-box {
                 font-size: 1.5em; } }
-            @media only all and (min-width: 80em) {
+            @media all and (min-width: 80em) {
               .billboard .banners .banner .container .content.upper-box {
                 font-size: 1.75em; } }
-          .billboard .banners .banner .container .content.showsize h2:before {
-            content: 'sm '; }
-            @media only all and (min-width: 20em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '20 '; } }
-            @media only all and (min-width: 30em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '30 '; } }
-            @media only all and (min-width: 40em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '40 '; } }
-            @media only all and (min-width: 50em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '50 '; } }
-            @media only all and (min-width: 60em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '60 '; } }
-            @media only all and (min-width: 70em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '70 '; } }
-            @media only all and (min-width: 80em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '80 '; } }
-            @media only all and (min-width: 90em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '90 '; } }
-            @media only all and (min-width: 100em) {
-              .billboard .banners .banner .container .content.showsize h2:before {
-                content: '100 '; } }
-          .billboard .banners .banner .container .content h2 {
-            color: white;
-            font-size: 2.1em;
-            line-height: 1;
-            margin: 0; }
-            @media only all and (min-width: 40em) {
-              .billboard .banners .banner .container .content h2 {
-                font-size: 2.4em; } }
-  .billboard > .brow-container {
+  .billboard .control-nav {
+    position: absolute;
+    bottom: 1rem;
+    z-index: 1;
+    list-style: none;
     margin: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row; }
-    @media only screen and (min-width: 51em) {
-      .billboard > .brow-container {
-        justify-content: flex-end; } }
-    .billboard > .brow-container .brow {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      align-content: stretch;
-      background-color: #a47140;
-      border-bottom: 4px solid #dcc3ab;
-      max-height: 50px;
-      min-height: 50px;
-      overflow: hidden;
-      padding: 0 0.5rem; }
-      @media only all and (min-width: 51em) {
-        .billboard > .brow-container .brow {
-          width: 60%;
-          flex-grow: 0;
-          align-self: flex-end; } }
-      .billboard > .brow-container .brow a.play-video {
-        color: inherit;
-        text-decoration: none;
+    padding: 0; }
+    .billboard .control-nav li {
+      padding: 0.25rem; }
+      .billboard .control-nav li a {
         display: block;
-        color: white;
-        font-size: 0.9em;
-        overflow: hidden; }
-        .billboard > .brow-container .brow a.play-video img {
-          vertical-align: middle; }
-        .billboard > .brow-container .brow a.play-video .video-details {
-          padding-left: 0.5em; }
-          .billboard > .brow-container .brow a.play-video .video-details .title {
-            font-size: 0.7em;
-            text-transform: uppercase; }
-            @media only all and (min-width: 35em) {
-              .billboard > .brow-container .brow a.play-video .video-details .title {
-                font-size: 1em; } }
-            @media only all and (min-width: 40em) {
-              .billboard > .brow-container .brow a.play-video .video-details .title {
-                font-size: 0.9em; } }
-          .billboard > .brow-container .brow a.play-video .video-details .length {
-            color: #513922;
-            display: none; }
-            @media only all and (min-width: 51em) {
-              .billboard > .brow-container .brow a.play-video .video-details .length {
-                color: #634629;
-                display: inline-block; } }
-      .billboard > .brow-container .brow ol.control-nav {
-        flex: 1;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        line-height: 1;
-        text-align: right; }
-        .billboard > .brow-container .brow ol.control-nav > li {
-          display: inline-block;
-          margin: 0 5px; }
-          .billboard > .brow-container .brow ol.control-nav > li:last-child {
-            margin-right: 0; }
-          .billboard > .brow-container .brow ol.control-nav > li a {
-            overflow: hidden;
-            text-indent: 100%;
-            white-space: nowrap;
-            background: #b88554;
-            border-radius: 50%;
-            display: block;
-            height: 20px;
-            width: 20px;
-            transition: 400ms; }
-            .billboard > .brow-container .brow ol.control-nav > li a.active {
-              cursor: default; }
-            .billboard > .brow-container .brow ol.control-nav > li a.active, .billboard > .brow-container .brow ol.control-nav > li a:active, .billboard > .brow-container .brow ol.control-nav > li a:focus, .billboard > .brow-container .brow ol.control-nav > li a:hover {
-              background-color: white; }
-            @media only all and (min-width: 51em) {
-              .billboard > .brow-container .brow ol.control-nav > li a {
-                background: #b88554;
-                position: relative;
-                z-index: 2; } }
-  .billboard .intro-text {
-    display: flex;
-    color: #484b47;
-    line-height: 2;
-    max-width: 40em;
-    padding: 2rem 1.5rem 3rem; }
-    @media only all and (min-width: 51em) {
-      .billboard .intro-text {
-        clear: both;
-        max-width: none;
-        padding: 0 0 3rem; } }
-    .billboard .intro-text .slide {
-      display: flex;
-      flex-direction: column; }
-      @media only all and (min-width: 51em) {
-        .billboard .intro-text .slide {
-          flex-direction: row; } }
-      .billboard .intro-text .slide .leadin {
-        flex: 1;
-        background-color: white;
-        color: #20251f;
-        font-size: 1.2em;
-        line-height: 1.6;
-        overflow: hidden; }
-        .billboard .intro-text .slide .leadin p {
-          margin: 0; }
-        @media only all and (min-width: 40em) {
-          .billboard .intro-text .slide .leadin {
-            font-size: 1.35em; } }
-        @media only all and (min-width: 50em) {
-          .billboard .intro-text .slide .leadin {
-            font-size: 1.5em; } }
-        @media only all and (min-width: 51em) {
-          .billboard .intro-text .slide .leadin {
-            padding: 1rem 2rem; } }
-        @media only all and (min-width: 60em) {
-          .billboard .intro-text .slide .leadin {
-            font-size: 1.65em;
-            padding-top: 2rem; } }
-      .billboard .intro-text .slide .text {
-        flex: 1.5;
-        display: none; }
-        @media only all and (min-width: 51em) {
-          .billboard .intro-text .slide .text {
-            padding: 1rem 3rem;
-            display: block; } }
-        .billboard .intro-text .slide .text .read-more {
-          font-size: 0.75em;
-          letter-spacing: 2px;
-          text-decoration: none;
-          text-transform: uppercase;
-          white-space: nowrap; }
+        height: 0.5rem;
+        width: 0.5rem;
+        line-height: 0;
+        text-indent: -9999px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.87);
+        cursor: pointer;
+        transition: background-color 300ms;
+        box-shadow: 0 0 0.5rem #000;
+        background: rgba(0, 0, 0, 0.47); }
+        .billboard .control-nav li a:focus, .billboard .control-nav li a:hover {
+          background-color: rgba(255, 255, 255, 0.47); }
+        .billboard .control-nav li a.active {
+          background-color: rgba(255, 255, 255, 0.87); }
 
 .main-nav {
   background-color: #f2f2f0; }
@@ -374,7 +256,7 @@
     margin: 0;
     padding: 0;
     list-style: none; }
-    @media only all and (min-width: 960px) {
+    @media only all and (min-width: 60em) {
       .main-nav .buckets {
         min-width: 300px;
         max-width: 300px; } }
@@ -470,7 +352,7 @@
             opacity: 0; }
           .main-nav .modules .module .panels .panel-set .layout-row.border > * {
             border-top: 2px dotted #bbb; }
-            @media only all and (min-width: 600px) {
+            @media only all and (min-width: 50em) {
               .main-nav .modules .module .panels .panel-set .layout-row.border > * {
                 border-top: none;
                 border-left: 2px dotted #bbb; } }
@@ -481,6 +363,66 @@
             border-top: 2px dotted #bbb; }
             .main-nav .modules .module .panels .panel-set .layout-column.border > *:first-child {
               border-top: none; }
+          .main-nav .modules .module .panels .panel-set .panel .panel-content > div, .main-nav .modules .module .panels .panel-set .panel .panel-content > a {
+            padding: 3rem;
+            text-decoration: none;
+            color: inherit; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content > div:active, .main-nav .modules .module .panels .panel-set .panel .panel-content > div:focus, .main-nav .modules .module .panels .panel-set .panel .panel-content > div:hover, .main-nav .modules .module .panels .panel-set .panel .panel-content > a:active, .main-nav .modules .module .panels .panel-set .panel .panel-content > a:focus, .main-nav .modules .module .panels .panel-set .panel .panel-content > a:hover {
+              outline: 0; }
+          .main-nav .modules .module .panels .panel-set .panel .panel-content-link .read-more {
+            line-height: 1;
+            font-size: 4rem;
+            transition: color 200ms;
+            color: rgba(0, 0, 0, 0.13); }
+          .main-nav .modules .module .panels .panel-set .panel .panel-content-link:hover .read-more, .main-nav .modules .module .panels .panel-set .panel .panel-content-link:focus .read-more, .main-nav .modules .module .panels .panel-set .panel .panel-content-link:active .read-more {
+            color: #b88554; }
+          .main-nav .modules .module .panels .panel-set .panel .panel-content-video {
+            text-align: center; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-video h3 {
+              transition: color 200ms;
+              color: #acaaa3; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-video .play-icon > i {
+              color: rgba(0, 0, 0, 0.13);
+              font-size: 4rem;
+              border-radius: 50%;
+              border: 2pt solid rgba(0, 0, 0, 0.13);
+              transition: all 200ms; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-video:hover h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-video:focus h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-video:active h3 {
+              color: #333333; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-video:hover .play-icon > i, .main-nav .modules .module .panels .panel-set .panel .panel-content-video:focus .play-icon > i, .main-nav .modules .module .panels .panel-set .panel .panel-content-video:active .play-icon > i {
+              color: rgba(0, 0, 0, 0.54);
+              border-color: #a47140; }
+          .main-nav .modules .module .panels .panel-set .panel .panel-content-image {
+            text-align: left;
+            background-size: cover;
+            background-position: center center; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a {
+              padding: 1rem;
+              position: relative;
+              transition: background-color 200ms;
+              background-color: rgba(0, 0, 0, 0.54);
+              color: rgba(255, 255, 255, 0.87); }
+              .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a h3 {
+                font-size: 1.8em;
+                font-family: CenturyStd-Book;
+                color: #b88554; }
+              .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a > p {
+                transition: opacity 200ms; }
+              .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div .play-icon, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a .play-icon {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0; }
+                .main-nav .modules .module .panels .panel-set .panel .panel-content-image > div .play-icon > i, .main-nav .modules .module .panels .panel-set .panel .panel-content-image > a .play-icon > i {
+                  color: rgba(255, 255, 255, 0.47);
+                  border: 0; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > div, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > a, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > div, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > a, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > div, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > a {
+              background-color: transparent; }
+              .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > div > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > div > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > a > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover > a > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > div > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > div > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > a > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus > a > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > div > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > div > p, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > a > h3, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active > a > p {
+                opacity: 0; }
+            .main-nav .modules .module .panels .panel-set .panel .panel-content-image:hover .play-icon > i, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:focus .play-icon > i, .main-nav .modules .module .panels .panel-set .panel .panel-content-image:active .play-icon > i {
+              color: inherit; }
           .main-nav .modules .module .panels .panel-set .panel figure {
             position: relative;
             overflow: hidden;
@@ -490,11 +432,17 @@
               display: block;
               margin: 0 auto; }
           .main-nav .modules .module .panels .panel-set .panel h3 {
-            font-size: 1.8em;
+            font-size: 1.3em;
             line-height: 1.2;
-            margin: 0 0 1rem; }
+            margin: 0 0 1rem;
+            font-family: AvenirLTStd-Heavy;
+            color: #333333; }
           .main-nav .modules .module .panels .panel-set .panel p {
             font-size: 0.9em; }
+
+main, .main {
+  background-color: #ffffff;
+  color: #2e2e2e; }
 
 .site-header {
   position: absolute;
@@ -542,7 +490,9 @@
       color: #fff; }
   .fullpage-scroll-section .scroll-indicator {
     position: absolute;
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     bottom: 1rem;
     right: 1rem;
     text-decoration: none;
@@ -550,9 +500,17 @@
     z-index: 3; }
     .fullpage-scroll-section .scroll-indicator .label {
       opacity: 0;
-      transition: opacity 400ms; }
-    .fullpage-scroll-section .scroll-indicator .icon {
-      text-align: center; }
+      transition: opacity 400ms;
+      margin-right: 0.75rem; }
+    .fullpage-scroll-section .scroll-indicator i {
+      background: #b88554;
+      border-radius: 3px;
+      color: rgba(255, 255, 255, 0.87);
+      font-size: 2rem;
+      display: block;
+      height: 2rem;
+      width: 2rem;
+      line-height: 1; }
     .fullpage-scroll-section .scroll-indicator:focus .label, .fullpage-scroll-section .scroll-indicator:hover .label {
       opacity: 1; }
 
@@ -668,3 +626,16 @@
             display: block;
             text-decoration: none;
             font-size: 1.3em; }
+
+.video-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  padding-bottom: 56.25%; }
+  .video-container > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }

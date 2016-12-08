@@ -2,7 +2,7 @@ Steps to install SDA
 ====================
 
 These steps assume you are running Ubuntu 14.04 LTS or CentOS/RHEL 7.2.
-They also assumes that you have copied the sda.war and SSL cert pieces to the same directory as the playbook (by default /sda/releng/ansible)
+They also assumes that you have copied the sda.war and SSL cert pieces to the same directory as the playbook (by default /sda/releng/ansible). Note also that the admin interface is protected with a default username of `sda` and password of `Password123`. Please change this before going live!
 
 **It is recommended to reboot when this completes.**
 

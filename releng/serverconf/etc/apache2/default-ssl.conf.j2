@@ -149,17 +149,16 @@ SSLSessionCacheTimeout  300
     
     
     # Catalog Entry Admin Tools #
-    Alias /catalog/admin/ {{ project_directory }}/web/catalog-admin/
-    <Directory {{ project_directory }}/web/catalog-admin/>
-        #AuthType Basic
-        #AuthName "SDA Login"
+    <Directory {{ project_directory }}/web/admin/>
+        AuthType Basic
+        AuthName "SDA Login"
         # (Following line optional)
-        #AuthBasicProvider file
-        #AuthUserFile file.passwd
-        #Require valid-user
-        Require all granted
+        AuthBasicProvider file
+        AuthUserFile {{ project_directory }}/sda.htpasswd
+        Require valid-user
+        #Require all granted
     </Directory>
-   RewriteRule  ^/catalog/admin$    /catalog/admin/ [R,L]
+   
     
     # Splash site #
     Alias / {{ project_directory }}/web/

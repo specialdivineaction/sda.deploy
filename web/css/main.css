@@ -8549,6 +8549,26 @@ form .form-field {
 .section--media aside.bio {
   background: #b88554;
   color: #eee8de; }
+.section--media .next-prev {
+  background-color: #eee8de; }
+  .section--media .next-prev a {
+    padding: 1rem;
+    text-decoration: none;
+    font-size: 1.3rem;
+    color: rgba(0, 0, 0, 0.87);
+    opacity: 0.54;
+    transition: opacity 200ms; }
+    .section--media .next-prev a:hover, .section--media .next-prev a:focus, .section--media .next-prev a:active {
+      opacity: 1; }
+    .section--media .next-prev a i {
+      color: #b88554;
+      font-size: 2rem; }
+    .section--media .next-prev a span {
+      line-height: 1; }
+    .section--media .next-prev a.next {
+      border-left: 1px solid rgba(0, 0, 0, 0.47); }
+    .section--media .next-prev a.prev {
+      border-right: 1px solid rgba(0, 0, 0, 0.47); }
 
 .section--media-list {
   max-width: 50rem; }

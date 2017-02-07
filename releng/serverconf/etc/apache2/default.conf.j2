@@ -84,6 +84,11 @@
       Require all granted
     </Directory>
 
+    <IfModule mod_expires.c>
+        ExpiresActive on
+        ExpiresByType application/json          "access plus 0 seconds"
+    </IfModule>
+
 ##### End SDA config  
     
 {% if ssl_enabled == true %}    

@@ -254,6 +254,8 @@
      #   apache2_module: name=proxy_html state=present
       - name: install headers module
         apache2_module: name=headers state=present
+      - name: install expires module
+        apache2_module: name=expires state=present
       - name: enable the ssl site in apache in 14.04
         command: /usr/sbin/a2ensite default-ssl creates=/etc/apache2/sites-enabled/default-ssl.conf
         when: ssl_enabled == true 

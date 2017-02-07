@@ -166,6 +166,11 @@ SSLSessionCacheTimeout  300
       Require all granted
     </Directory>
 
+    <IfModule mod_expires.c>
+        ExpiresActive on
+        ExpiresByType application/json          "access plus 0 seconds"
+    </IfModule>
+
 #    <Location /tomcat-sda/>
 #        # It is recommended to enable this next line to restrict access to tomcat manager to the local subnet
 #        #Require ip {{ local_subnet }}

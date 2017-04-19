@@ -2,22 +2,9 @@
         ServerAdmin {{ admin_email }}
         ServerName {{ host_name }}.{{ dns_suffix }}
 
-        DocumentRoot /var/www/html
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
-        </Directory>
-        <Directory /var/www/html/>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride None
-                Require all granted
-        </Directory>
-
-        ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
-        <Directory "/usr/lib/cgi-bin">
-                AllowOverride None
-                Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-                Require all granted
         </Directory>
 
         ErrorLog ${APACHE_LOG_DIR}/error.log
@@ -28,13 +15,6 @@
 
         CustomLog ${APACHE_LOG_DIR}/access.log combined
 
-    Alias /doc/ "/usr/share/doc/"
-    <Directory "/usr/share/doc/">
-        Options Indexes MultiViews FollowSymLinks
-        AllowOverride None
-        Require ip 127.0.0.0/255.0.0.0 ::1/128
-    </Directory>
-    
 #### Begin SDA config
 
     ProxyRequests Off
@@ -67,20 +47,11 @@
         ProxyPassReverse    ajp://localhost:8009/sda/services/
     </Location>
     
-    
-    # Catalog Entry Admin Tools #
-    <Directory {{ project_directory }}/web/admin/>
-        AuthType Basic
-        AuthName "SDA Login"
-        # (Following line optional)
-        AuthBasicProvider file
-        AuthUserFile {{ project_directory }}/sda.htpasswd
-        Require valid-user
-    </Directory>
-    
-    # Splash site #
-    Alias / {{ project_directory }}/web/
+    # main site #
+    DocumentRoot {{ project_directory }}/web/
     <Directory {{ project_directory }}/web/>
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride all
       Require all granted
     </Directory>
 

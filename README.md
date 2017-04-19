@@ -36,3 +36,32 @@ Basic steps to run ansible playbook
 * `ansible-playbook setup_sda.yml -c local`
 * reboot
 
+Steps to update SDA
+===================
+
+The following commands must be run as root.
+
+    sudo su
+
+Give the currently running SDA Tomcat container a backup name, and stop the container
+
+    docker rename sda sda-old
+    docker stop sda-old
+
+The following commands are to be executed under the Tomcat container's **webapps** directory (`/tomcat/sda/webapps` by default).
+Here we Back up the original WAR (just in case), remove existing application data, and copy the new war into place.
+
+    mv sda.war ~/sda.war.bak
+    rm -rf sda
+    mv ~/sda.war .
+    chown 8009:docker sda.war
+
+The following command must be executed under the Ansible script location (originally set up as `/sda/releng/ansible` above).
+Here we deploy the new container with the new WAR.
+
+    ansible-playbook setup_sda.yml -c local --tags=sda_container
+
+After thorough testing, if site appears to be working properly, remove the old container and backup WAR.
+
+    docker rm sda-old
+    rm ~/sda.war.bak
